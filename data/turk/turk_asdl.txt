@@ -1,0 +1,15 @@
+# define primitive fields
+int, cc, tok
+
+regex = Not(regex arg)
+    | Star(regex arg)
+    | Optional(regex arg)
+    | Concat(regex left, regex right)
+    | Or(regex left, regex right)
+    | And(regex left, regex right)
+    | StartWith(regex arg)
+    | EndWith(regex arg)
+    | Contain(regex arg)
+    | RepeatAtleast(regex arg, int k)
+    | CharClass(cc arg)
+    | Const(tok arg)
