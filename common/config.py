@@ -30,8 +30,8 @@ def _add_train_args(parser):
     parser.add_argument('--batch_size', type=int, help='batch size')
     parser.add_argument('--max_epoch', type=int, help='max epoch')
 
-    parser.add_argument('--clip_grad', type=float, default=5.0, help='clip grad to')
-    parser.add_argument('--lr', type=float, default=.001, help='learning rate')
+    parser.add_argument('--clip_grad', type=float, default=10.0, help='clip grad to')
+    parser.add_argument('--lr', type=float, default=.003, help='learning rate')
 
     parser.add_argument('--log_every', type=int, help='log every iter')
     parser.add_argument('--run_val_after', type=int, default=5, help='run validation after')
