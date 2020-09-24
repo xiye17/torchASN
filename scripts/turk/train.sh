@@ -14,8 +14,7 @@ max_epoch=100
 clip_grad=5.0
 batch_size=32
 lr=0.003
-ls=0.1
-model_file=model.turk.enc${enc_hidden_size}.src${src_emb_size}.field${field_emb_size}.drop${dropout}..max_ep${max_epoch}.batch${batch_size}.lr${lr}.clip_grad${clip_grad}.bin
+model_file=model.turk.enc${enc_hidden_size}.src${src_emb_size}.field${field_emb_size}.drop${dropout}.max_ep${max_epoch}.batch${batch_size}.lr${lr}.clip_grad${clip_grad}.bin
 
 # echo "**** Writing results to logs/regex/${model_name}.log ****"
 # mkdir -p logs/regex

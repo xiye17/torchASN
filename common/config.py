@@ -34,7 +34,7 @@ def _add_train_args(parser):
     parser.add_argument('--lr', type=float, default=.001, help='learning rate')
 
     parser.add_argument('--log_every', type=int, help='log every iter')
-    parser.add_argument('--run_val_after', type=int, help='run validation after')
+    parser.add_argument('--run_val_after', type=int, default=5, help='run validation after')
     parser.add_argument('--max_decode_step', type=int, help='maximum decode step')
 
 def parse_args(mode):

@@ -1,3 +1,4 @@
+import sys
 from common.config import *
 from components.dataset import *
 
@@ -72,9 +73,9 @@ def test(args):
         oracle_res.append(eq_res)
         acc += eq_res
         i += 1
-        print(acc, i)
-    print("Oracle Acc", sum(oracle_res) * 1.0/len(oracle_res) )
-    print("Eval Acc", match_acc)
+        # print(acc, i)
+    print("String Acc", match_acc)
+    print("DFA Acc", sum(oracle_res) * 1.0/len(oracle_res) )
 
 if __name__ == '__main__':
     args = parse_args('test')

@@ -45,13 +45,13 @@ def train(args):
             epoch_loss += torch.sum(loss).data.item()
             loss = torch.mean(loss)
 
-            torch.nn.utils.clip_grad_norm_(parser.parameters(), args.clip_grad)
             loss.backward()
+            torch.nn.utils.clip_grad_norm_(parser.parameters(), args.clip_grad)
 
             optimizer.step()
             train_iter += 1
             if train_iter % log_every == 0:
-                print("{:.3f}".format(loss_val / (log_every * args.batch_size )))
+                print("[epoch {}, step {}] loss: {:.3f}".format(epoch, train_iter, loss_val / (log_every * args.batch_size )))
                 loss_val = 0.
 
         # print(epoch, 'Train loss', '{:.3f}'.format(epoch_loss / len(train_set)), 'time elapsed %d' % (time.time() - epoch_begin))
