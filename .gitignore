@@ -1,2 +1,2 @@
-*.bin
 __pycache__
+data/*.bin
