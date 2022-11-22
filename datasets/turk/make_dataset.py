@@ -16,12 +16,15 @@ from datasets.utils import build_dataset_vocab
 def load_dataset(split, transition_system):
 
     prefix = 'data/turk/'
-    src_file = join(prefix, "src-{}.txt".format(split))
-    spec_file = join(prefix, "spec-{}.txt".format(split))
+    src_file = join(prefix, "src-{}.txt".format(split)) # описание словами
+    spec_file = join(prefix, "spec-{}.txt".format(split)) # код
+
+    print(len(src_file))
+    print(len(spec_file))
 
     examples = []
-    for idx, (src_line, spec_line) in enumerate(zip(open(src_file), open(spec_file))):
-        print(idx)
+    for idx, (src_line, spec_line) in enumerate(zip(open(src_file), open(spec_file))): # итерируемся
+        # print(idx)
         
         src_line = src_line.rstrip()
         spec_line = spec_line.rstrip()
@@ -32,7 +35,7 @@ def load_dataset(split, transition_system):
 
         # sanity check
         reconstructed_expr = transition_system.ast_to_surface_code(spec_ast)
-        print(spec_line, reconstructed_expr)
+        # print(spec_line, reconstructed_expr)
         assert spec_line == reconstructed_expr
 
         tgt_action_tree = transition_system.get_action_tree(spec_ast)
@@ -61,12 +64,12 @@ def make_dataset():
     grammar = Grammar.from_text(open('data/turk/turk_asdl.txt').read())
     transition_system = TurkTransitionSystem(grammar)
 
+
     train_set = load_dataset("train", transition_system)
     dev_set = load_dataset("val", transition_system)
     test_set = load_dataset("test", transition_system)
     # get vocab from actions
     vocab = build_dataset_vocab(train_set, transition_system, src_cutoff=2)
-    
     # cache decision using vocab can be done in train
     pickle.dump(train_set, open('data/turk/train.bin', 'wb'))
     pickle.dump(dev_set, open('data/turk/dev.bin', 'wb'))

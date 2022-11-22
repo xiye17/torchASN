@@ -315,4 +315,5 @@ if __name__ == '__main__':
         """
 
     grammar = Grammar.from_text(asdl_desc)
+    print(grammar._productions)
     print(DSLCompositeType('1') == DSLPrimitiveType('1'))

@@ -83,6 +83,8 @@ class Batch(object):
     def build_input(self):
 
         sent_lens = [len(x.src_toks) for x in self.examples]
+        # print([x.src_toks for x in self.examples])
+        # print(len(self.vocab.src_vocab.word_to_id))
         max_sent_len = max(sent_lens)
         sent_masks = sent_lens_to_mask(sent_lens, max_sent_len)
         sents = [

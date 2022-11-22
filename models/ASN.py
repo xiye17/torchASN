@@ -14,6 +14,7 @@ class CompositeTypeModule(nn.Module):
         super().__init__()
         self.type = type
         self.productions = productions
+        # print(productions)
         self.w = nn.Linear(2 * args.enc_hid_size + args.field_emb_size, len(productions))
         # self.dropout = nn.Dropout(args.dropout)
 
@@ -31,6 +32,7 @@ class ConstructorTypeModule(nn.Module):
         super().__init__()
         self.production = production
         self.n_field = len(production.constructor.fields)
+        # print(production.constructor.fields)
         self.field_embeddings = nn.Embedding(len(production.constructor.fields), args.field_emb_size)
         self.w = nn.Linear(2 * args.enc_hid_size + args.field_emb_size, args.enc_hid_size)
         self.dropout = nn.Dropout(args.dropout)
@@ -45,11 +47,12 @@ class ConstructorTypeModule(nn.Module):
         contexts = contexts.expand([self.n_field, -1])
         inputs = self.w(torch.cat([inputs, contexts], dim=1)).unsqueeze(0)
         v_state = (v_state[0].expand(self.n_field, -1).unsqueeze(0), v_state[1].expand(self.n_field, -1).unsqueeze(0))
+        # print(inputs.shape, v_state[0].shape, v_state[1].shape)
         _, outputs = v_lstm(inputs, v_state)
 
         hidden_states = outputs[0].unbind(1)
         cell_states = outputs[1].unbind(1)
-
+        # print(outputs[0].shape, outputs[1].shape)
         return list(zip(hidden_states, cell_states))
 
 class PrimitiveTypeModule(nn.Module):
@@ -57,6 +60,7 @@ class PrimitiveTypeModule(nn.Module):
         super().__init__()
         self.type = type
         self.vocab = vocab
+        # print(vocab)
         self.w = nn.Linear(2 * args.enc_hid_size + args.field_emb_size, len(vocab))
 
     def forward(self, x):
@@ -83,9 +87,12 @@ class ASNParser(nn.Module):
         self.grammar = grammar
         # init
         comp_type_modules = []
+
         for dsl_type in grammar.composite_types:
+            # print((dsl_type.name, grammar.get_prods_by_type(dsl_type)))
             comp_type_modules.append((dsl_type.name,
                                       CompositeTypeModule(args, dsl_type, grammar.get_prods_by_type(dsl_type))))
+        # print([i for i in comp_type_modules])
         self.comp_type_dict = nn.ModuleDict(comp_type_modules)
 
         # init
@@ -94,7 +101,7 @@ class ASNParser(nn.Module):
             cnstr_type_modules.append((prod.constructor.name,
                                        ConstructorTypeModule(args, prod)))
         self.const_type_dict = nn.ModuleDict(cnstr_type_modules)
-
+        # print(cnstr_type_modules)
         prim_type_modules = []
         for prim_type in grammar.primitive_types:
             prim_type_modules.append((prim_type.name,
@@ -107,22 +114,28 @@ class ASNParser(nn.Module):
 
     def score(self, examples):
         # for ex in examples:
+
         scores = [self._score(ex) for ex in examples]
         # print(scores)
         return torch.stack(scores)
     
 
     def _score(self, ex):
+        # for i in self.vocab.primitive_vocabs.values():
+        #     print(i.word_to_id)
         batch = Batch([ex], self.grammar, self.vocab)
+
         context_vecs, encoder_outputs = self.encode(batch)
         init_state = encoder_outputs
-
+        # print(batch.sent_masks)
         return self._score_node(self.grammar.root_type, init_state, ex.tgt_actions, context_vecs, batch.sent_masks)
 
     def encode(self, batch):
         sent_lens = batch.sent_lens
         # sent
-        sent_embedding =  self.src_embedding(batch.sents)
+        # print(batch.sents)
+        sent_embedding = self.src_embedding(batch.sents)
+        # print(sent_embedding.shape)
         context_vecs, final_state = self.encoder(sent_embedding, sent_lens)
 
         # L * b * hidden,  
@@ -133,6 +146,7 @@ class ASNParser(nn.Module):
         v_output = self.dropout(v_state[0])
         contexts = self.attn(v_output.unsqueeze(0), context_vecs).squeeze(0)
 
+        # print(contexts.shape)
         if node_type.is_primitive_type():
             module = self.prim_type_dict[node_type.name]
             # scores = mask * module()
@@ -143,19 +157,23 @@ class ASNParser(nn.Module):
             # print("Primitive", score)
             return score
 
-        
+
         cnstr = action_node.action.choice.constructor
+        # print(cnstr.name)
+        # print(node_type.name)
         comp_module = self.comp_type_dict[node_type.name]
         scores = comp_module.score(v_output, contexts)
         score = -1 * scores.view([-1])[action_node.action.choice_index]
         # print("Apply", score)
 
         # pass through
+        # print(node_type.name)
         cnstr_module = self.const_type_dict[cnstr.name]
         # cnstr_results = const_module.iup()
         # next_states = self.v_lstm( [1 * 1 * x], v_state)
         cnstr_results = cnstr_module.update(self.v_lstm, v_state, contexts)
         for next_field, next_state, next_action in zip(cnstr.fields, cnstr_results, action_node.fields):
+            # print(next_field, next_state, next_action)
             score += self._score_node(next_field.type, next_state, next_action, context_vecs, context_masks)
         return score
 
@@ -163,7 +181,7 @@ class ASNParser(nn.Module):
         batch = Batch([ex], self.grammar, self.vocab, train=False)        
         context_vecs, encoder_outputs = self.encode(batch)
         init_state = encoder_outputs
-
+        print("**************************************")
         action_tree = self._naive_parse(self.grammar.root_type, init_state, context_vecs, batch.sent_masks, 1)
 
         return self.transition_system.build_ast_from_actions(action_tree)
@@ -177,36 +195,50 @@ class ASNParser(nn.Module):
 
         # else token needed
         # tgt_token = tgt
+        print('-------------------------------')
+        print("nodetype = ", node_type.name)
+
         contexts = self.attn(v_state[0].unsqueeze(0), context_vecs).squeeze(0)
         if depth > 9:
             return ActionTree(None)
 
         if node_type.is_primitive_type():
             module = self.prim_type_dict[node_type.name]
+            print('primitive module = ', module)
             # scores = mask * module()
             scores = module.score(v_state[0], contexts).cpu().numpy().flatten()
             # scores =  [tgt_action_tree.action.choice_idx]
             # b * choice
             # score = -1 * scores.view([-1])[action_node.action.choice_index]
             choice_idx = np.argmax(scores)
+            print("word = ", module.vocab.get_word(choice_idx))
             return ActionTree(GenTokenAction(node_type, module.vocab.get_word(choice_idx)))
 
         
         comp_module = self.comp_type_dict[node_type.name]
+        print("comp type = ", comp_module)
         scores = comp_module.score(v_state[0], contexts).cpu().numpy().flatten()
         choice_idx = np.argmax(scores)
+        print("comp_module.productions = ", comp_module.productions)
         production = comp_module.productions[choice_idx]
 
+        print("production = ", production)
         action = ApplyRuleAction(node_type, production)
+        print("action = ", action)
         cnstr = production.constructor
-
+        print("constructor.name = ", cnstr.name)
         # pass through
         cnstr_module = self.const_type_dict[cnstr.name]
+        print("cnstr module = ", cnstr_module)
         # cnstr_results = const_module.iup()
         # next_states = self.v_lstm( [1 * 1 * x], v_state)
         cnstr_results = cnstr_module.update(self.v_lstm, v_state, contexts)
+        print("BEGIN recursive")
         action_fields = [self._naive_parse(next_field.type, next_state, context_vecs, context_masks, depth+1) for next_field, next_state in zip(cnstr.fields, cnstr_results)]
-
+        # print(action)
+        print("action_fields = ", action_fields)
+        print("END recursive")
+        print("-------------------------------")
         return ActionTree(action, action_fields)
 
     def parse(self, ex):
@@ -322,6 +354,9 @@ class ASNParser(nn.Module):
 
         return parser
 
+    def forward(self, input):
+        return [self.naive_parse(ex) for ex in input]
+
 class EmbeddingLayer(nn.Module):
     def __init__(self, embedding_dim, full_dict_size, embedding_dropout_rate):
         super(EmbeddingLayer, self).__init__()
@@ -399,6 +434,7 @@ class RNNEncoder(nn.Module):
         # print(max_length, output.size(), h_t[0].size(), h_t[1].size())
 
         output = self.dropout(output)
+        # print(output.shape, h_t[0].shape, h_t[1].shape)
         return (output, h_t)
 
 
@@ -422,17 +458,22 @@ class LuongAttention(nn.Module):
         # Calculate the attention weights (energies) based on the given method
         query = query.transpose(0, 1)
         context = context.transpose(0, 1)
-
+        # print(query.shape, context.shape)
         e = self.attn(context)
+        # print(e.shape)
         # e: B * Q * C
+        # print(query.shape, e.transpose(1, 2).shape)
         e = torch.matmul(query, e.transpose(1, 2))
         if inf_mask is not None:
             e = e + inf_mask.unsqueeze(1)
 
         # dim w: B * Q * C, context: B * C * H, wanted B * Q * H
+        # print(e.shape)
         w = F.softmax(e, dim=2)
+        # print(w.shape, context.shape)
         c = torch.matmul(w, context)
         # # Return the softmax normalized probability scores (with added dimension
         if requires_weight:
             return c.transpose(0, 1), w
+        # print(c.transpose(0, 1).shape)
         return c.transpose(0, 1)
