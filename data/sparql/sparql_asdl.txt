@@ -1,0 +1,21 @@
+# define primitive fields
+unk_attr, predicate, sub, obj, order_d
+
+regex = OrderedQuery(select_stmt left, where_stmt middle, unk_attr col, order_d d)
+    | UnorderedQuery(select_stmt left, where_stmt right)
+
+select_stmt = Sum(col_stmt1 arg)
+    | Count(col_stmt1 arg)
+    | Avg(col_stmt1 arg)
+    | Nothing(col_stmt1 arg)
+
+col_stmt1 = DistinctConst(unk_attr k)
+    | Const(unk_attr k)
+
+where_stmt = R0(sub left, predicate k, obj right, triplets second) | Trip(sub left, predicate k, obj right)
+
+triplets = R1(sub left, predicate k, obj right, triplets second) | Trip1(sub left, predicate k, obj right)
+
+
+
+

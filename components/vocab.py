@@ -121,9 +121,9 @@ class VocabEntry(object):
         word_freq = Counter(chain(*corpus))
         non_singletons = [w for w in word_freq if word_freq[w] > 1]
         singletons = [w for w in word_freq if word_freq[w] == 1]
-        print('number of word types: %d, number of word types w/ frequency > 1: %d' % (len(word_freq),
-                                                                                       len(non_singletons)))
-        print('singletons: %s' % singletons)
+        # print('number of word types: %d, number of word types w/ frequency > 1: %d' % (len(word_freq),
+        #                                                                                len(non_singletons)))
+        # print('singletons: %s' % singletons)
 
         top_k_words = sorted(word_freq.keys(), reverse=True, key=word_freq.get)[:size]
         words_not_included = []
@@ -133,8 +133,8 @@ class VocabEntry(object):
                     vocab_entry.add(word)
                 else:
                     words_not_included.append(word)
-
-        print('word types not included: %s' % words_not_included)
+        print(vocab_entry.id_to_word)
+        # print('word types not included: %s' % words_not_included)
 
         return vocab_entry
 
@@ -145,6 +145,7 @@ class PrimitiveVocabEntry(VocabEntry):
         self.word_to_id['<unk>'] = 0
 
         self.id_to_word = {v: k for k, v in self.word_to_id.items()}
+
         
 class Vocab(object):
     def __init__(self, **kwargs):

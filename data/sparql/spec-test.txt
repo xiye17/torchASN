@@ -1,0 +1,1000 @@
+select distinct ?x0 where { SUBJ_1 dr:iscapitalof ?x0 . }
+select sum ( ?x0 ) where { SUBJ_1 dr:locatedinclosest ?dummy . ?dummy dr:border_length ?x0 . }
+select ?x0 where { SUBJ_1 dr:person_foundation ?dummy . ?dummy dr:birth_day ?x0 . }
+select ?x0 where { SUBJ_1 dr:company_owner ?dummy . ?dummy dr:company_employment ?x0 . }
+select ?x0 where { SUBJ_1 dr:native_country ?dummy . ?dummy dr:count_works ?x0 . }
+select ?x0 where { SUBJ_1 dr:locatedin ?dummy . ?dummy dr:location ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:narrative_period ?x0 . }
+select ?x0 where { SUBJ_1 dr:company_hq_location ?dummy . ?dummy dr:company_inception_date ?x0 . }
+select ?x0 where { SUBJ_1 dr:parent ?dummy . ?dummy dr:name ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:company_parent ?x0 . }
+select ?x0 where { SUBJ_1 dr:influenced_by ?dummy . ?dummy dr:birth_day ?x0 . }
+select count ( distinct ?x0 ) where { ?x0 dr:company_inception_place OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:company_owner ?dummy . ?dummy dr:company_employment ?x0 . }
+select ?x0 where { SUBJ_1 dr:birth_place ?dummy . ?dummy dr:iscapitalof ?x0 . }
+select sum ( ?x0 ) where { SUBJ_1 dr:locatedinclosest ?dummy . ?dummy dr:border_length ?x0 . }
+select ?x0 where { SUBJ_1 dr:wrote ?dummy . ?dummy dr:publication_date ?x0 . }
+select ?x0 where { SUBJ_1 dr:native_country ?dummy . ?dummy dr:period_country ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:borders_country ?dummy . ?dummy dr:population_density ?x0 . } order by desc ( ?x0 )
+select ?x0 where { SUBJ_1 dr:locatedin ?dummy . ?dummy dr:depth ?x0 . }
+select sum ( ?x0 ) where { SUBJ_1 dr:locatedinclosest ?dummy . ?dummy dr:border_length ?x0 . }
+select ?x0 where { SUBJ_1 dr:issimilarto ?dummy . ?dummy wdt:p2437 ?x0 . }
+select ?x0 where { SUBJ_1 dr:borders_country ?dummy . ?dummy dr:date_country_foundation ?x0 . }
+select distinct ?x0 where { ?x0 dr:company_hq_location OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:author ?dummy . ?dummy dr:name ?x0 . }
+select distinct ?x0 where { ?x0 dr:company_industry OBJ_1 . }
+select distinct ?x0 where { SUBJ_1 dr:native_country ?x0 . }
+select count ( distinct ?x0 ) where { ?x0 dr:languages OBJ_1 . }
+select distinct ?x0 where { SUBJ_1 dr:company_employment ?x0 . }
+select distinct ?x0 where { ?x0 dr:company_hq_location OBJ_1 . }
+select count ( distinct ?x0 ) where { SUBJ_1 dr:river_inflows ?x0 . }
+select count ( distinct ?x0 ) where { SUBJ_1 dr:has_parts ?x0 . }
+select ?x0 where { SUBJ_1 dr:sibling ?dummy . ?dummy dr:twitter ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:native_city ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:age ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:date_country_end ?x0 . }
+select distinct ?x0 where { ?x0 dr:element_by_named_after OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:country_of_citizenship ?dummy . ?dummy dr:area ?x0 . }
+select count ( distinct ?x0 ) where { SUBJ_1 dr:political_own ?x0 . }
+select ?x0 where { SUBJ_1 dr:company_owner ?dummy . ?dummy dr:child_count ?x0 . }
+select ?x0 where { SUBJ_1 dr:location ?dummy . ?dummy dr:area ?x0 . }
+select ?x0 where { SUBJ_1 dr:native_city ?dummy . ?dummy dr:population_count ?x0 . }
+select sum ( ?x0 ) where { SUBJ_1 dr:borders_country ?dummy . ?dummy dr:area ?x0 . }
+select count ( distinct ?x0 ) where { SUBJ_1 dr:wash ?x0 . }
+select count ( distinct ?x0 ) where { ?x0 dr:residence OBJ_1 . }
+select distinct ?x0 where { SUBJ_1 dr:border_length ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:relative ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:birth_place ?x0 . }
+select ?x0 where { SUBJ_1 dr:influenced_by ?dummy . ?dummy dr:death_age ?x0 . }
+select ?x0 where { SUBJ_1 dr:locatedin ?dummy . ?dummy dr:length ?x0 . }
+select ?x0 where { SUBJ_1 dr:company_owner ?dummy . ?dummy dr:birth_day ?x0 . }
+select ?x0 where { SUBJ_1 dr:company_founder ?dummy . ?dummy dr:birth_day ?x0 . }
+select count ( distinct ?x0 ) where { SUBJ_1 dr:company_founder ?x0 . }
+select ?x0 where { SUBJ_1 dr:iscapitalof ?dummy . ?dummy dr:area ?x0 . }
+select ?x0 where { SUBJ_1 dr:iscapitalof ?dummy . ?dummy dr:area ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:work_period_start ?x0 . }
+select ?x0 where { SUBJ_1 dr:discoverer ?dummy . ?dummy dr:death_age ?x0 . }
+select count ( distinct ?x0 ) where { ?x0 dr:river_confluence OBJ_1 . }
+select distinct ?x0 where { SUBJ_1 dr:length ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:lightest ?x0 . }
+select distinct ?x0 where { ?x0 dr:wrote OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:native_country ?dummy . ?dummy dr:population_density ?x0 . }
+select ?x0 where { SUBJ_1 dr:location ?dummy . ?dummy dr:area ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:publication_date ?x0 . }
+select ?x0 where { SUBJ_1 dr:narrative_location ?dummy . ?dummy dr:width ?x0 . }
+select ?x0 where { SUBJ_1 dr:iscapitalof ?dummy . ?dummy dr:population_count ?x0 . }
+select ?x0 where { SUBJ_1 dr:hasauthor ?dummy . ?dummy dr:pseudonym ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:chemical_formula ?x0 . }
+select ?x0 where { SUBJ_1 dr:locatedin ?dummy . ?dummy dr:location ?x0 . }
+select distinct ?x0 where { ?x0 wdt:p495 OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:native_country ?dummy . ?dummy dr:area ?x0 . }
+select ?x0 where { SUBJ_1 dr:iscapitalof ?dummy . ?dummy dr:numberneighboringcountries ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:company_hq_location ?x0 . }
+select ?x0 where { SUBJ_1 dr:author ?dummy . ?dummy dr:birth_day ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:relative ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:wash ?dummy . ?dummy dr:length ?x0 . } order by desc ( ?x0 )
+select ?x0 where { SUBJ_1 dr:locatedin ?dummy . ?dummy dr:width ?x0 . }
+select ?x0 where { SUBJ_1 dr:political_own ?dummy . ?dummy dr:border_length ?x0 . }
+select ?x0 where { SUBJ_1 wdt:p26 ?dummy . ?dummy dr:birth_day ?x0 . }
+select count ( distinct ?x0 ) where { ?x0 dr:residence OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:place_of_origin ?dummy . ?dummy dr:period_country ?x0 . }
+select ?x0 where { SUBJ_1 dr:company_inception_place ?dummy . ?dummy dr:period_country ?x0 . }
+select ?x0 where { SUBJ_1 dr:author ?dummy . ?dummy dr:work_period_end ?x0 . }
+select ?x0 where { SUBJ_1 dr:locatedin ?dummy . ?dummy dr:depth ?x0 . }
+select ?x0 where { SUBJ_1 dr:residence ?dummy . ?dummy dr:population_density ?x0 . }
+select ?x0 where { SUBJ_1 dr:influenced_by ?dummy . ?dummy dr:work_period_start ?x0 . }
+select ?x0 where { SUBJ_1 dr:company_director ?dummy . ?dummy dr:birth_place ?x0 . }
+select ?x0 where { SUBJ_1 dr:child ?dummy . ?dummy dr:main_field_of_work ?x0 . }
+select count ( distinct ?x0 ) where { SUBJ_1 dr:isrecommendedto ?dummy . ?dummy dr:hasgeneralfilmgenre ?x0 . }
+select ?x0 where { SUBJ_1 dr:locatedin ?dummy . ?dummy dr:width ?x0 . }
+select ?x0 where { SUBJ_1 dr:locatedin ?dummy . ?dummy dr:border_length ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:valence ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:sibling ?dummy . ?dummy dr:height ?x0 . } order by desc ( ?x0 )
+select distinct ?x0 where { SUBJ_1 dr:width ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:chemical_structure ?x0 . }
+select distinct ?x0 where { ?x0 dr:company_industry OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:company_owner ?dummy . ?dummy dr:company_logo ?x0 . }
+select ?x0 where { SUBJ_1 dr:locatedin ?dummy . ?dummy dr:count_works ?x0 . }
+select ?x0 where { SUBJ_1 dr:creator ?dummy . ?dummy dr:work_period_start ?x0 . }
+select ?x0 where { SUBJ_1 dr:river_confluence ?dummy . ?dummy dr:area ?x0 . }
+select ?x0 where { SUBJ_1 dr:isdirectorandactorinfilm ?dummy . ?dummy wdt:p2047 ?x0 . }
+select ?x0 where { SUBJ_1 dr:author ?dummy . ?dummy dr:child_count ?x0 . }
+select ?x0 where { SUBJ_1 dr:father ?dummy . ?dummy dr:work_period_start ?x0 . }
+select ?x0 where { SUBJ_1 dr:birth_place ?dummy . ?dummy dr:population_count ?x0 . }
+select ?x0 where { SUBJ_1 dr:discoverer ?dummy . ?dummy dr:count_works ?x0 . }
+select distinct ?x0 where { SUBJ_1 wdt:p26 ?x0 . }
+select ?x0 where { SUBJ_1 dr:narrative_location ?dummy . ?dummy dr:borders_country ?x0 . }
+select ?x0 where { SUBJ_1 dr:creator ?dummy . ?dummy dr:author ?x0 . }
+select ?x0 where { SUBJ_1 dr:discoverer ?dummy . ?dummy dr:company_inception_date ?x0 . }
+select sum ( ?x0 ) where { SUBJ_1 dr:issimilarto ?dummy . ?dummy wdt:p2047 ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:main_field_of_work ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:company_logo ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:atomic_number ?x0 . }
+select ?x0 where { ?x0 dr:river_inflows OBJ_1 . ?x0 dr:river_inflows OBJ_1 . }
+select distinct ?x0 where { ?x0 dr:company_owner OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:company_hq_location ?dummy . ?dummy dr:locatedinclosest ?x0 . }
+select ?x0 where { SUBJ_1 dr:wrote ?dummy . ?dummy dr:publication_date ?x0 . }
+select ?x0 where { SUBJ_1 dr:native_country ?dummy . ?dummy dr:population_density ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:company_employment ?x0 . }
+select distinct ?x0 where { ?x0 dr:field_of_work OBJ_1 . }
+select distinct ?x0 where { ?x0 dr:native_city OBJ_1 . }
+select distinct ?x0 where { SUBJ_1 dr:manager ?x0 . }
+select ?x0 where { SUBJ_1 dr:author ?dummy . ?dummy dr:count_works_char ?x0 . }
+select distinct ?x0 where { ?x0 dr:influenced_by OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:company_parent ?dummy . ?dummy dr:company_inception_date ?x0 . }
+select count ( distinct ?x0 ) where { ?x0 dr:company_director OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:author ?dummy . ?dummy dr:real_full_name ?x0 . }
+select distinct ?x0 where { SUBJ_1 wdt:p57 ?x0 . }
+select ?x0 where { SUBJ_1 dr:company_inception_place ?dummy . ?dummy dr:period_country ?x0 . }
+select ?x0 where { SUBJ_1 dr:locatedin ?dummy . ?dummy dr:depth ?x0 . }
+select ?x0 where { SUBJ_1 dr:narrative_location ?dummy . ?dummy dr:borders_country ?x0 . }
+select ?x0 where { SUBJ_1 dr:major_component ?dummy . ?dummy dr:valence ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:manager ?x0 . }
+select count ( distinct ?x0 ) where { ?x0 dr:borders_country OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:borders_country ?dummy . ?dummy dr:population_count ?x0 . }
+select ?x0 where { SUBJ_1 dr:element_by_named_after ?dummy . ?dummy dr:valence ?x0 . }
+select ?x0 where { SUBJ_1 dr:location ?dummy . ?dummy dr:area ?x0 . }
+select ?x0 where { SUBJ_1 dr:main_character_female ?dummy . ?dummy dr:publication_date ?x0 . }
+select ?x0 where { SUBJ_1 dr:political_own ?dummy . ?dummy dr:area ?x0 . }
+select ?x0 where { SUBJ_1 dr:author ?dummy . ?dummy dr:marriage_fact_now ?x0 . }
+select ?x0 where { SUBJ_1 dr:locatedinclosest ?dummy . ?dummy dr:period_country ?x0 . }
+select ?x0 where { SUBJ_1 wdt:p26 ?dummy . ?dummy dr:birth_day ?x0 . }
+select ?x0 where { SUBJ_1 dr:country_of_citizenship ?dummy . ?dummy dr:population_count ?x0 . }
+select count ( distinct ?x0 ) where { SUBJ_1 dr:has_parts ?x0 . }
+select ?x0 where { SUBJ_1 dr:residence ?dummy . ?dummy dr:area ?x0 . }
+select ?x0 where { SUBJ_1 dr:isdirectorandactorinfilm ?dummy . ?dummy dr:hasgeneralfilmgenre ?x0 . }
+select ?x0 where { SUBJ_1 dr:company_founder ?dummy . ?dummy dr:birth_day ?x0 . }
+select count ( distinct ?x0 ) where { ?x0 dr:company_owner OBJ_1 . }
+select distinct ?x0 where { SUBJ_1 dr:narrative_location ?x0 . }
+select distinct ?x0 where { ?x0 dr:locatedinclosest OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:author ?dummy . ?dummy dr:child_count ?x0 . }
+select ?x0 where { SUBJ_1 dr:residence ?dummy . ?dummy dr:count_works ?x0 . }
+select distinct ?x0 where { ?x0 dr:creator OBJ_1 . }
+select distinct ?x0 where { SUBJ_1 dr:sibling ?dummy . ?dummy dr:height ?x0 . } order by desc ( ?x0 )
+select ?x0 where { SUBJ_1 dr:native_city ?dummy . ?dummy dr:area ?x0 . }
+select ?x0 where { SUBJ_1 dr:iscapitalof ?dummy . ?dummy dr:border_length ?x0 . }
+select ?x0 where { SUBJ_1 dr:sibling ?dummy . ?dummy dr:work_period_start ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:river_confluence ?x0 . }
+select distinct ?x0 where { ?x0 dr:political_party OBJ_1 . }
+select distinct ?x0 where { SUBJ_1 dr:borders_country ?dummy . ?dummy dr:border_length ?x0 . } order by desc ( ?x0 )
+select ?x0 where { SUBJ_1 dr:locatedin ?dummy . ?dummy dr:border_length ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:parent ?x0 . }
+select ?x0 where { SUBJ_1 dr:author ?dummy . ?dummy dr:work_period_end ?x0 . }
+select ?x0 where { SUBJ_1 dr:iscapitalof ?dummy . ?dummy dr:area ?x0 . }
+select ?x0 where { SUBJ_1 dr:isdirectorandactorinfilm ?dummy . ?dummy dr:hasgeneralfilmgenre ?x0 . }
+select ?x0 where { SUBJ_1 dr:locatedin ?dummy . ?dummy dr:length ?x0 . }
+select ?x0 where { SUBJ_1 dr:company_owner ?dummy . ?dummy dr:birth_day ?x0 . }
+select distinct ?x0 where { SUBJ_1 wdt:p1971 ?x0 . }
+select ?x0 where { SUBJ_1 dr:company_owner ?dummy . ?dummy dr:company_logo ?x0 . }
+select ?x0 where { SUBJ_1 dr:hasauthor ?dummy . ?dummy dr:pseudonym ?x0 . }
+select ?x0 where { SUBJ_1 dr:company_parent ?dummy . ?dummy dr:company_employment ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:main_character_female ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:atomic_number ?x0 . }
+select ?x0 where { SUBJ_1 dr:parent ?dummy . ?dummy dr:marriage_fact_now ?x0 . }
+select distinct ?x0 where { ?x0 dr:present_in_literary_work OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:locatedinclosest ?dummy . ?dummy dr:elevation ?x0 . }
+select count ( distinct ?x0 ) where { ?x0 dr:company_owner OBJ_1 . }
+select distinct ?x0 where { SUBJ_1 dr:education ?x0 . }
+select ?x0 where { SUBJ_1 dr:influenced_by ?dummy . ?dummy dr:death_date ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:mass ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:borders_country ?dummy . ?dummy dr:border_length ?x0 . } order by desc ( ?x0 )
+select ?x0 where { SUBJ_1 dr:political_own ?dummy . ?dummy dr:date_country_end ?x0 . }
+select ?x0 where { SUBJ_1 dr:relative ?dummy . ?dummy dr:creator ?x0 . }
+select ?x0 where { SUBJ_1 dr:native_country ?dummy . ?dummy dr:period_country ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:company_parent ?x0 . }
+select ?x0 where { SUBJ_1 dr:company_products ?dummy . ?dummy dr:company_logo ?x0 . }
+select ?x0 where { SUBJ_1 dr:birth_place ?dummy . ?dummy dr:area ?x0 . }
+select distinct ?x0 where { ?x0 dr:relative OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:locatedin ?dummy . ?dummy dr:period_country ?x0 . }
+select ?x0 where { SUBJ_1 dr:first_ruler ?dummy . ?dummy dr:child_count ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:sibling ?x0 . }
+select ?x0 where { SUBJ_1 dr:company_inception_place ?dummy . ?dummy dr:date_foundation ?x0 . }
+select ?x0 where { SUBJ_1 dr:locatedin ?dummy . ?dummy dr:date_foundation ?x0 . }
+select ?x0 where { SUBJ_1 dr:company_hq_location ?dummy . ?dummy dr:creation_date ?x0 . }
+select count ( distinct ?x0 ) where { ?x0 dr:influenced_by OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:location ?dummy . ?dummy dr:area ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:political_own ?x0 . }
+select ?x0 where { SUBJ_1 dr:father ?dummy . ?dummy dr:work_period_start ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:pseudonym ?x0 . }
+select count ( distinct ?x0 ) where { ?x0 dr:narrative_location OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:locatedin ?dummy . ?dummy dr:period_country ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:political_own ?x0 . }
+select ?x0 where { SUBJ_1 dr:locatedinclosest ?dummy . ?dummy dr:name ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:company_boardmembers ?x0 . }
+select ?x0 where { SUBJ_1 dr:political_own ?dummy . ?dummy dr:border_length ?x0 . }
+select ?x0 where { SUBJ_1 dr:discoverer ?dummy . ?dummy dr:company_inception_date ?x0 . }
+select distinct ?x0 where { ?x0 dr:company_owner OBJ_1 . }
+select distinct ?x0 where { SUBJ_1 dr:relative ?x0 . }
+select ?x0 where { SUBJ_1 dr:country_of_citizenship ?dummy . ?dummy dr:date_country_foundation ?x0 . }
+select count ( distinct ?x0 ) where { ?x0 dr:company_parent OBJ_1 . }
+select distinct ?x0 where { SUBJ_1 dr:location ?x0 . }
+select ?x0 where { SUBJ_1 dr:wash ?dummy . ?dummy dr:depth ?x0 . }
+select ?x0 where { SUBJ_1 dr:relative ?dummy . ?dummy dr:main_field_of_work ?x0 . }
+select ?x0 where { SUBJ_1 dr:reformer ?dummy . ?dummy dr:company_inception_date ?x0 . }
+select ?x0 where { SUBJ_1 dr:company_hq_location ?dummy . ?dummy dr:creation_date ?x0 . }
+select ?x0 where { SUBJ_1 dr:wash ?dummy . ?dummy dr:area ?x0 . }
+select ?x0 where { SUBJ_1 dr:parts_alliance ?dummy . ?dummy dr:period_country ?x0 . }
+select ?x0 where { SUBJ_1 dr:narrative_location ?dummy . ?dummy dr:date_country_foundation ?x0 . }
+select ?x0 where { SUBJ_1 dr:isdirectorandactorinfilm ?dummy . ?dummy dr:hasgeneralfilmgenre ?x0 . }
+select ?x0 where { SUBJ_1 dr:company_director ?dummy . ?dummy dr:child_count ?x0 . }
+select ?x0 where { SUBJ_1 dr:river_confluence ?dummy . ?dummy dr:width ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:width ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:company_founder ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:ethnic_group ?x0 . }
+select count ( distinct ?x0 ) where { ?x0 dr:native_country OBJ_1 . }
+select distinct ?x0 where { SUBJ_1 dr:composed ?x0 . }
+select ?x0 where { SUBJ_1 dr:political_own ?dummy . ?dummy dr:population_count ?x0 . }
+select ?x0 where { SUBJ_1 dr:locatedinclosest ?dummy . ?dummy dr:area ?x0 . }
+select ?x0 where { SUBJ_1 dr:native_city ?dummy . ?dummy dr:population_density ?x0 . }
+select ?x0 where { SUBJ_1 dr:parent ?dummy . ?dummy dr:child_count ?x0 . }
+select ?x0 where { SUBJ_1 dr:creator ?dummy . ?dummy dr:pseudonym ?x0 . }
+select ?x0 where { SUBJ_1 dr:residence ?dummy . ?dummy dr:date_country_foundation ?x0 . }
+select distinct ?x0 where { ?x0 dr:wrote OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:company_inception_place ?dummy . ?dummy dr:period_country ?x0 . }
+select ?x0 where { SUBJ_1 wdt:p26 ?dummy . ?dummy dr:marriage_count ?x0 . }
+select distinct ?x0 where { SUBJ_1 wdt:p57 ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:education ?x0 . }
+select ?x0 where { SUBJ_1 dr:place_of_origin ?dummy . ?dummy dr:border_length ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:borders_country ?dummy . ?dummy dr:border_length ?x0 . } order by desc ( ?x0 )
+select ?x0 where { SUBJ_1 dr:iscapitalof ?dummy . ?dummy dr:date_country_foundation ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:chemical_formula ?x0 . }
+select count ( distinct ?x0 ) where { SUBJ_1 dr:political_party ?x0 . }
+select distinct ?x0 where { SUBJ_1 wdt:p57 ?x0 . }
+select ?x0 where { SUBJ_1 dr:first_ruler ?dummy . ?dummy dr:birth_place ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:borders_country ?dummy . ?dummy dr:border_length ?x0 . } order by desc ( ?x0 )
+select distinct ?x0 where { SUBJ_1 dr:border_length ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:count_works_char ?x0 . }
+select distinct ?x0 where { ?x0 dr:discoverer OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:political_own ?dummy . ?dummy dr:area ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:lightest ?x0 . }
+select ?x0 where { SUBJ_1 dr:isdirectorandactorinfilm ?dummy . ?dummy wdt:p577 ?x0 . }
+select ?x0 where { SUBJ_1 dr:company_owner ?dummy . ?dummy dr:company_logo ?x0 . }
+select ?x0 where { SUBJ_1 dr:company_inception_place ?dummy . ?dummy dr:elevation ?x0 . }
+select distinct ?x0 where { ?x0 dr:residence OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:major_component ?dummy . ?dummy dr:valence ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:river_inflows ?dummy . ?dummy dr:length ?x0 . } order by desc ( ?x0 )
+select ?x0 where { SUBJ_1 dr:locatedin ?dummy . ?dummy dr:population_density ?x0 . }
+select ?x0 where { SUBJ_1 dr:locatedinclosest ?dummy . ?dummy dr:numberneighboringcountries ?x0 . }
+select count ( distinct ?x0 ) where { ?x0 dr:river_confluence OBJ_1 . }
+select distinct ?x0 where { SUBJ_1 dr:wash ?dummy . ?dummy dr:length ?x0 . } order by desc ( ?x0 )
+select ?x0 where { SUBJ_1 dr:father ?dummy . ?dummy dr:child_count ?x0 . }
+select count ( distinct ?x0 ) where { ?x0 dr:company_director OBJ_1 . }
+select distinct ?x0 where { SUBJ_1 dr:borders_country ?dummy . ?dummy dr:border_length ?x0 . } order by desc ( ?x0 )
+select distinct ?x0 where { ?x0 dr:wrote OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:place_of_origin ?dummy . ?dummy dr:border_length ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:sibling ?dummy . ?dummy dr:height ?x0 . } order by desc ( ?x0 )
+select distinct ?x0 where { SUBJ_1 wdt:p57 ?x0 . }
+select count ( distinct ?x0 ) where { SUBJ_1 wdt:p1303 ?x0 . }
+select ?x0 where { SUBJ_1 dr:native_city ?dummy . ?dummy dr:population_density ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:position_held ?x0 . }
+select distinct ?x0 where { ?x0 dr:major_component OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:hasauthor ?dummy . ?dummy dr:twitter ?x0 . }
+select ?x0 where { SUBJ_1 dr:wash ?dummy . ?dummy dr:area ?x0 . }
+select ?x0 where { SUBJ_1 dr:company_hq_location ?dummy . ?dummy dr:period_country ?x0 . }
+select ?x0 where { SUBJ_1 dr:residence ?dummy . ?dummy dr:border_length ?x0 . }
+select count ( distinct ?x0 ) where { SUBJ_1 dr:influenced_by ?dummy . ?dummy wdt:p2604 ?x0 . }
+select ?x0 where { SUBJ_1 dr:country_of_citizenship ?dummy . ?dummy dr:date_country_end ?x0 . }
+select distinct ?x0 where { ?x0 dr:lightest OBJ_1 . }
+select distinct ?x0 where { SUBJ_1 dr:company_employment ?x0 . }
+select ?x0 where { SUBJ_1 dr:native_country ?dummy . ?dummy dr:date_country_end ?x0 . }
+select ?x0 where { SUBJ_1 dr:sibling ?dummy . ?dummy dr:twitter ?x0 . }
+select ?x0 where { SUBJ_1 dr:iscapitalof ?dummy . ?dummy dr:area ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:company_hq_location ?x0 . }
+select distinct ?x0 where { ?x0 dr:isrecommendedto OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:company_owner ?dummy . ?dummy dr:child_count ?x0 . }
+select ?x0 where { SUBJ_1 dr:native_country ?dummy . ?dummy dr:period_country ?x0 . }
+select distinct ?x0 where { ?x0 dr:native_city OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:iscapitalof ?dummy . ?dummy dr:population_density ?x0 . }
+select ?x0 where { SUBJ_1 dr:company_owner ?dummy . ?dummy dr:marriage_fact_now ?x0 . }
+select ?x0 where { SUBJ_1 dr:residence ?dummy . ?dummy dr:date_foundation ?x0 . }
+select ?x0 where { SUBJ_1 dr:location ?dummy . ?dummy dr:length ?x0 . }
+select distinct ?x0 where { ?x0 dr:mother OBJ_1 . }
+select distinct ?x0 where { SUBJ_1 dr:date_country_end ?x0 . }
+select count ( distinct ?x0 ) where { ?x0 dr:relative OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:native_city ?dummy . ?dummy dr:elevation ?x0 . }
+select ?x0 where { SUBJ_1 dr:political_own ?dummy . ?dummy dr:area ?x0 . }
+select count ( distinct ?x0 ) where { SUBJ_1 dr:relative ?dummy . ?dummy dr:twitter ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:climate ?x0 . }
+select ?x0 where { SUBJ_1 dr:major_component ?dummy . ?dummy dr:alias ?x0 . }
+select ?x0 where { SUBJ_1 dr:hasauthor ?dummy . ?dummy dr:pseudonym ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:education ?x0 . }
+select ?x0 where { SUBJ_1 dr:company_inception_place ?dummy . ?dummy dr:population_count ?x0 . }
+select ?x0 where { SUBJ_1 dr:native_country ?dummy . ?dummy dr:period_country ?x0 . }
+select ?x0 where { SUBJ_1 dr:locatedin ?dummy . ?dummy dr:depth ?x0 . }
+select ?x0 where { SUBJ_1 dr:hasauthor ?dummy . ?dummy dr:native_city ?x0 . }
+select ?x0 where { SUBJ_1 dr:sibling ?dummy . ?dummy dr:marriage_count ?x0 . }
+select count ( distinct ?x0 ) where { ?x0 dr:birth_place OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:location ?dummy . ?dummy dr:population_density ?x0 . }
+select ?x0 where { SUBJ_1 dr:company_parent ?dummy . ?dummy dr:company_logo ?x0 . }
+select count ( distinct ?x0 ) where { ?x0 dr:company_owner OBJ_1 . }
+select sum ( ?x0 ) where { SUBJ_1 dr:borders_country ?dummy . ?dummy dr:area ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:hasgeneralmusicgenre ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:issimilarto ?dummy . ?dummy wdt:p2130 ?x0 . } order by desc ( ?x0 )
+select ?x0 where { SUBJ_1 dr:locatedin ?dummy . ?dummy dr:count_works ?x0 . }
+select ?x0 where { SUBJ_1 dr:locatedinclosest ?dummy . ?dummy dr:discovered_at ?x0 . }
+select ?x0 where { SUBJ_1 dr:locatedinclosest ?dummy . ?dummy dr:length ?x0 . }
+select distinct ?x0 where { ?x0 dr:relative OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:author ?dummy . ?dummy wdt:p2604 ?x0 . }
+select ?x0 where { SUBJ_1 dr:native_city ?dummy . ?dummy dr:area ?x0 . }
+select count ( distinct ?x0 ) where { SUBJ_1 dr:sibling ?x0 . }
+select ?x0 where { SUBJ_1 dr:company_hq_location ?dummy . ?dummy dr:population_density ?x0 . }
+select count ( distinct ?x0 ) where { ?x0 dr:whois OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:company_owner ?dummy . ?dummy dr:birth_day ?x0 . }
+select ?x0 where { SUBJ_1 dr:present_in_literary_work ?dummy . ?dummy dr:author ?x0 . }
+select ?x0 where { SUBJ_1 dr:influenced_by ?dummy . ?dummy dr:marriage_count ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:relative ?x0 . }
+select ?x0 where { SUBJ_1 dr:parent ?dummy . ?dummy dr:birth_day ?x0 . }
+select count ( distinct ?x0 ) where { SUBJ_1 dr:river_inflows ?x0 . }
+select count ( distinct ?x0 ) where { ?x0 dr:place_of_origin OBJ_1 . }
+select ?x0 where { ?x0 dr:element_by_named_after OBJ_1 . ?x0 dr:element_by_named_after OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:company_hq_location ?dummy . ?dummy dr:population_density ?x0 . }
+select distinct ?x0 where { ?x0 dr:parts_alliance OBJ_1 . }
+select distinct ?x0 where { SUBJ_1 dr:company_logo ?x0 . }
+select distinct ?x0 where { ?x0 dr:dedicated_to OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:sibling ?dummy . ?dummy dr:pseudonym ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:lightest ?x0 . }
+select ?x0 where { SUBJ_1 dr:native_country ?dummy . ?dummy dr:area ?x0 . }
+select count ( distinct ?x0 ) where { SUBJ_1 dr:company_industry ?x0 . }
+select ?x0 where { SUBJ_1 dr:native_city ?dummy . ?dummy dr:population_count ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:borders_country ?dummy . ?dummy dr:population_density ?x0 . } order by desc ( ?x0 )
+select ?x0 where { SUBJ_1 dr:main_character_female ?dummy . ?dummy dr:publication_date ?x0 . }
+select ?x0 where { SUBJ_1 dr:creator ?dummy . ?dummy dr:pseudonym ?x0 . }
+select ?x0 where { SUBJ_1 dr:locatedin ?dummy . ?dummy dr:width ?x0 . }
+select distinct ?x0 where { ?x0 dr:sibling OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:location ?dummy . ?dummy dr:elevation ?x0 . }
+select count ( distinct ?x0 ) where { SUBJ_1 dr:sibling ?x0 . }
+select ?x0 where { SUBJ_1 dr:company_inception_place ?dummy . ?dummy dr:date_country_foundation ?x0 . }
+select ?x0 where { SUBJ_1 dr:influenced_by ?dummy . ?dummy dr:twitter ?x0 . }
+select count ( distinct ?x0 ) where { ?x0 dr:company_owner OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:company_hq_location ?dummy . ?dummy dr:population_count ?x0 . }
+select count ( distinct ?x0 ) where { SUBJ_1 dr:political_own ?x0 . }
+select ?x0 where { SUBJ_1 dr:company_director ?dummy . ?dummy dr:real_full_name ?x0 . }
+select ?x0 where { SUBJ_1 dr:parent ?dummy . ?dummy dr:death_date ?x0 . }
+select distinct ?x0 where { ?x0 dr:hasfilmsequel OBJ_1 . }
+select count ( distinct ?x0 ) where { ?x0 dr:native_city OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:iscapitalof ?dummy . ?dummy dr:company_end_date ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:hasauthor ?x0 . }
+select ?x0 where { SUBJ_1 dr:education ?dummy . ?dummy dr:company_inception_date ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:sibling ?dummy . ?dummy dr:height ?x0 . } order by desc ( ?x0 )
+select ?x0 where { SUBJ_1 dr:isdirectorandactorinfilm ?dummy . ?dummy dr:hasgeneralfilmgenre ?x0 . }
+select ?x0 where { SUBJ_1 dr:person_foundation ?dummy . ?dummy dr:period_country ?x0 . }
+select count ( distinct ?x0 ) where { ?x0 dr:first_ruler OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:native_country ?dummy . ?dummy dr:area ?x0 . }
+select sum ( ?x0 ) where { SUBJ_1 dr:borders_country ?dummy . ?dummy dr:area ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:company_products ?x0 . }
+select count ( distinct ?x0 ) where { ?x0 dr:main_character OBJ_1 . }
+select distinct ?x0 where { SUBJ_1 dr:political_own ?x0 . }
+select count ( distinct ?x0 ) where { ?x0 dr:company_products OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:isdirectorandactorinfilm ?dummy . ?dummy dr:hasgeneralfilmgenre ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:issimilarto ?dummy . ?dummy wdt:p2130 ?x0 . } order by desc ( ?x0 )
+select ?x0 where { SUBJ_1 dr:company_owner ?dummy . ?dummy dr:child_count ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:person_foundation ?x0 . }
+select ?x0 where { SUBJ_1 dr:isdirectorandactorinfilm ?dummy . ?dummy wdt:p2130 ?x0 . }
+select ?x0 where { SUBJ_1 dr:company_owner ?dummy . ?dummy dr:company_logo ?x0 . }
+select ?x0 where { SUBJ_1 dr:person_foundation ?dummy . ?dummy dr:birth_day ?x0 . }
+select ?x0 where { SUBJ_1 dr:company_products ?dummy . ?dummy dr:company_logo ?x0 . }
+select count ( distinct ?x0 ) where { ?x0 dr:company_owner OBJ_1 . }
+select distinct ?x0 where { ?x0 dr:present_in_literary_work OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:native_country ?dummy . ?dummy dr:period_country ?x0 . }
+select count ( distinct ?x0 ) where { ?x0 dr:birth_place OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:discoverer ?dummy . ?dummy dr:death_age ?x0 . }
+select ?x0 where { SUBJ_1 dr:narrative_location ?dummy . ?dummy dr:borders_country ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:border_length ?x0 . }
+select ?x0 where { SUBJ_1 dr:sibling ?dummy . ?dummy dr:work_period_end ?x0 . }
+select ?x0 where { SUBJ_1 dr:company_owner ?dummy . ?dummy dr:company_employment ?x0 . }
+select ?x0 where { ?x0 dr:company_owner OBJ_1 . ?x0 dr:company_owner OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:sibling ?dummy . ?dummy dr:marriage_fact_now ?x0 . }
+select ?x0 where { SUBJ_1 dr:major_component ?dummy . ?dummy dr:alias ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:company_end_date ?x0 . }
+select ?x0 where { SUBJ_1 dr:political_own ?dummy . ?dummy dr:area ?x0 . }
+select distinct ?x0 where { ?x0 dr:company_owner OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:hasauthor ?dummy . ?dummy dr:pseudonym ?x0 . }
+select ?x0 where { SUBJ_1 dr:parent ?dummy . ?dummy dr:child_count ?x0 . }
+select count ( distinct ?x0 ) where { ?x0 dr:major_component OBJ_1 . }
+select distinct ?x0 where { ?x0 dr:company_hq_location OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:influenced_by ?dummy . ?dummy dr:hasgeneralmusicgenre ?x0 . }
+select ?x0 where { SUBJ_1 dr:place_of_origin ?dummy . ?dummy dr:period_country ?x0 . }
+select ?x0 where { SUBJ_1 dr:element_by_named_after ?dummy . ?dummy dr:alias ?x0 . }
+select ?x0 where { SUBJ_1 dr:father ?dummy . ?dummy dr:work_period_start ?x0 . }
+select ?x0 where { SUBJ_1 dr:isdirectorandactorinfilm ?dummy . ?dummy dr:hasgeneralfilmgenre ?x0 . }
+select ?x0 where { SUBJ_1 dr:iscapitalof ?dummy . ?dummy dr:area ?x0 . }
+select count ( distinct ?x0 ) where { ?x0 dr:father OBJ_1 . }
+select distinct ?x0 where { ?x0 dr:political_party OBJ_1 . }
+select distinct ?x0 where { SUBJ_1 dr:length ?x0 . }
+select ?x0 where { SUBJ_1 dr:native_country ?dummy . ?dummy dr:date_country_foundation ?x0 . }
+select ?x0 where { SUBJ_1 dr:native_city ?dummy . ?dummy dr:population_density ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:isdirectorandactorinfilm ?dummy . ?dummy wdt:p444 ?x0 . } order by desc ( ?x0 )
+select ?x0 where { SUBJ_1 dr:residence ?dummy . ?dummy dr:elevation ?x0 . }
+select ?x0 where { SUBJ_1 dr:company_founder ?dummy . ?dummy dr:real_full_name ?x0 . }
+select count ( distinct ?x0 ) where { ?x0 dr:discoverer OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:location ?dummy . ?dummy dr:discovered_at ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:wash ?dummy . ?dummy dr:length ?x0 . } order by desc ( ?x0 )
+select distinct ?x0 where { ?x0 dr:locatedin OBJ_1 . }
+select distinct ?x0 where { ?x0 dr:river_inflows OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:hasauthor ?dummy . ?dummy dr:death_age ?x0 . }
+select ?x0 where { SUBJ_1 dr:author ?dummy . ?dummy dr:birth_day ?x0 . }
+select ?x0 where { SUBJ_1 dr:isdirectorandactorinfilm ?dummy . ?dummy wdt:p2130 ?x0 . }
+select distinct ?x0 where { ?x0 dr:residence OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:place_of_origin ?dummy . ?dummy dr:element_by_named_after ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:work_period_start ?x0 . }
+select distinct ?x0 where { ?x0 dr:hasfilmsequel OBJ_1 . }
+select distinct ?x0 where { SUBJ_1 dr:mother ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:isdirectorandactorinfilm ?dummy . ?dummy wdt:p444 ?x0 . } order by desc ( ?x0 )
+select ?x0 where { SUBJ_1 dr:company_owner ?dummy . ?dummy dr:company_employment ?x0 . }
+select ?x0 where { SUBJ_1 dr:company_owner ?dummy . ?dummy dr:company_employment ?x0 . }
+select count ( distinct ?x0 ) where { SUBJ_1 dr:lightest ?x0 . }
+select ?x0 where { SUBJ_1 dr:company_founder ?dummy . ?dummy dr:child_count ?x0 . }
+select ?x0 where { SUBJ_1 dr:political_own ?dummy . ?dummy dr:period_country ?x0 . }
+select sum ( ?x0 ) where { SUBJ_1 dr:issimilarto ?dummy . ?dummy wdt:p2047 ?x0 . }
+select ?x0 where { SUBJ_1 dr:birth_place ?dummy . ?dummy dr:count_works_char ?x0 . }
+select ?x0 where { SUBJ_1 dr:creator ?dummy . ?dummy dr:author ?x0 . }
+select ?x0 where { SUBJ_1 dr:company_founder ?dummy . ?dummy dr:company_logo ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:borders_country ?dummy . ?dummy dr:border_length ?x0 . } order by desc ( ?x0 )
+select ?x0 where { SUBJ_1 dr:country_of_citizenship ?dummy . ?dummy dr:population_density ?x0 . }
+select ?x0 where { SUBJ_1 dr:native_country ?dummy . ?dummy dr:period_country ?x0 . }
+select ?x0 where { SUBJ_1 dr:iscapitalof ?dummy . ?dummy dr:area ?x0 . }
+select ?x0 where { SUBJ_1 dr:company_inception_place ?dummy . ?dummy dr:border_length ?x0 . }
+select distinct ?x0 where { ?x0 dr:political_own OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:native_country ?dummy . ?dummy dr:area ?x0 . }
+select count ( distinct ?x0 ) where { SUBJ_1 dr:lightest ?x0 . }
+select ?x0 where { SUBJ_1 dr:isdirectorandactorinfilm ?dummy . ?dummy wdt:p577 ?x0 . }
+select ?x0 where { SUBJ_1 dr:major_component ?dummy . ?dummy dr:chemical_formula ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:mass ?x0 . }
+select ?x0 where { SUBJ_1 dr:company_inception_place ?dummy . ?dummy dr:period_country ?x0 . }
+select ?x0 where { SUBJ_1 dr:political_own ?dummy . ?dummy dr:border_length ?x0 . }
+select distinct ?x0 where { ?x0 dr:position_held OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:element_by_named_after ?dummy . ?dummy dr:alias ?x0 . }
+select ?x0 where { SUBJ_1 dr:company_products ?dummy . ?dummy dr:company_logo ?x0 . }
+select count ( distinct ?x0 ) where { SUBJ_1 dr:company_products ?x0 . }
+select ?x0 where { SUBJ_1 dr:element_by_named_after ?dummy . ?dummy dr:atomic_number ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:population_count ?x0 . }
+select ?x0 where { SUBJ_1 dr:child ?dummy . ?dummy dr:count_works ?x0 . }
+select count ( distinct ?x0 ) where { ?x0 dr:residence OBJ_1 . }
+select count ( distinct ?x0 ) where { ?x0 dr:child OBJ_1 . }
+select count ( distinct ?x0 ) where { SUBJ_1 dr:main_character ?x0 . }
+select ?x0 where { SUBJ_1 dr:influenced_by ?dummy . ?dummy dr:child_count ?x0 . }
+select ?x0 where { SUBJ_1 wdt:p162 ?dummy . ?dummy wdt:p2604 ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:company_products ?x0 . }
+select ?x0 where { SUBJ_1 dr:locatedinclosest ?dummy . ?dummy dr:population_density ?x0 . }
+select ?x0 where { SUBJ_1 dr:birth_place ?dummy . ?dummy dr:iscapitalof ?x0 . }
+select ?x0 where { SUBJ_1 dr:child ?dummy . ?dummy dr:count_works ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:issimilarto ?dummy . ?dummy wdt:p2130 ?x0 . } order by desc ( ?x0 )
+select ?x0 where { SUBJ_1 dr:locatedin ?dummy . ?dummy dr:length ?x0 . }
+select ?x0 where { SUBJ_1 dr:location ?dummy . ?dummy dr:population_density ?x0 . }
+select ?x0 where { SUBJ_1 dr:birth_place ?dummy . ?dummy dr:locatedinclosest ?x0 . }
+select ?x0 where { SUBJ_1 dr:native_city ?dummy . ?dummy dr:area ?x0 . }
+select count ( distinct ?x0 ) where { SUBJ_1 dr:company_industry ?x0 . }
+select ?x0 where { SUBJ_1 dr:place_of_origin ?dummy . ?dummy dr:numberneighboringcountries ?x0 . }
+select ?x0 where { ?x0 dr:element_by_named_after OBJ_1 . ?x0 dr:element_by_named_after OBJ_1 . }
+select count ( distinct ?x0 ) where { SUBJ_1 dr:company_boardmembers ?x0 . }
+select ?x0 where { SUBJ_1 dr:parent ?dummy . ?dummy dr:count_works_char ?x0 . }
+select ?x0 where { SUBJ_1 dr:child ?dummy . ?dummy dr:work_period_start ?x0 . }
+select distinct ?x0 where { SUBJ_1 wdt:p1971 ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:count_works_char ?x0 . }
+select distinct ?x0 where { ?x0 dr:mother OBJ_1 . }
+select distinct ?x0 where { ?x0 dr:first_ruler OBJ_1 . }
+select count ( distinct ?x0 ) where { ?x0 dr:author OBJ_1 . }
+select distinct ?x0 where { SUBJ_1 dr:count_works ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:border_length ?x0 . }
+select ?x0 where { SUBJ_1 dr:element_by_named_after ?dummy . ?dummy dr:chemical_formula ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:population_count ?x0 . }
+select count ( distinct ?x0 ) where { SUBJ_1 dr:material ?x0 . }
+select ?x0 where { SUBJ_1 dr:influenced_by ?dummy . ?dummy dr:hasgeneralmusicgenre ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:company_industry ?x0 . }
+select ?x0 where { SUBJ_1 dr:element_by_named_after ?dummy . ?dummy dr:atomic_number ?x0 . }
+select distinct ?x0 where { ?x0 dr:first_ruler OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:native_city ?dummy . ?dummy dr:area ?x0 . }
+select ?x0 where { SUBJ_1 dr:locatedinclosest ?dummy . ?dummy dr:date_country_end ?x0 . }
+select ?x0 where { SUBJ_1 dr:issimilarto ?dummy . ?dummy dr:hasgeneralfilmgenre ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:population_count ?x0 . }
+select ?x0 where { SUBJ_1 dr:narrative_location ?dummy . ?dummy dr:area ?x0 . }
+select ?x0 where { SUBJ_1 dr:birth_place ?dummy . ?dummy dr:area ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:locatedin ?x0 . }
+select count ( distinct ?x0 ) where { SUBJ_1 dr:material ?x0 . }
+select distinct ?x0 where { ?x0 wdt:p915 OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:residence ?dummy . ?dummy dr:elevation ?x0 . }
+select ?x0 where { SUBJ_1 dr:major_component ?dummy . ?dummy dr:valence ?x0 . }
+select ?x0 where { SUBJ_1 dr:child ?dummy . ?dummy dr:height ?x0 . }
+select ?x0 where { SUBJ_1 dr:company_hq_location ?dummy . ?dummy dr:period_country ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:river_inflows ?dummy . ?dummy dr:length ?x0 . } order by desc ( ?x0 )
+select distinct ?x0 where { ?x0 dr:company_products OBJ_1 . }
+select ?x0 where { SUBJ_1 wdt:p26 ?dummy . ?dummy dr:work_period_start ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:number_of_parts ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:relative ?x0 . }
+select ?x0 where { SUBJ_1 dr:element_by_named_after ?dummy . ?dummy dr:valence ?x0 . }
+select count ( distinct ?x0 ) where { SUBJ_1 dr:company_boardmembers ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:chemical_formula ?x0 . }
+select ?x0 where { SUBJ_1 dr:father ?dummy . ?dummy dr:work_period_start ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:twitter ?x0 . }
+select distinct ?x0 where { ?x0 dr:discoverer OBJ_1 . }
+select count ( distinct ?x0 ) where { SUBJ_1 dr:hasauthor ?x0 . }
+select ?x0 where { SUBJ_1 wdt:p26 ?dummy . ?dummy dr:child_count ?x0 . }
+select ?x0 where { SUBJ_1 dr:sibling ?dummy . ?dummy wdt:p2604 ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:political_own ?x0 . }
+select ?x0 where { SUBJ_1 dr:creator ?dummy . ?dummy dr:death_age ?x0 . }
+select ?x0 where { SUBJ_1 dr:locatedinclosest ?dummy . ?dummy dr:population_density ?x0 . }
+select ?x0 where { SUBJ_1 dr:borders_country ?dummy . ?dummy dr:period_country ?x0 . }
+select distinct ?x0 where { ?x0 dr:heaviest OBJ_1 . }
+select distinct ?x0 where { SUBJ_1 dr:nickname ?x0 . }
+select ?x0 where { SUBJ_1 dr:native_city ?dummy . ?dummy dr:population_density ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:main_field_of_work ?x0 . }
+select count ( distinct ?x0 ) where { ?x0 dr:influenced_by OBJ_1 . }
+select distinct ?x0 where { SUBJ_1 dr:iscapitalof ?x0 . }
+select ?x0 where { SUBJ_1 dr:major_component ?dummy . ?dummy dr:valence ?x0 . }
+select ?x0 where { SUBJ_1 dr:locatedinclosest ?dummy . ?dummy dr:numberneighboringcountries ?x0 . }
+select distinct ?x0 where { ?x0 dr:locatedinclosest OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:native_country ?dummy . ?dummy dr:area ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:borders_country ?dummy . ?dummy dr:border_length ?x0 . } order by desc ( ?x0 )
+select ?x0 where { SUBJ_1 dr:political_own ?dummy . ?dummy dr:area ?x0 . }
+select count ( distinct ?x0 ) where { SUBJ_1 dr:relative ?dummy . ?dummy dr:twitter ?x0 . }
+select ?x0 where { SUBJ_1 dr:iscapitalof ?dummy . ?dummy dr:border_length ?x0 . }
+select count ( distinct ?x0 ) where { ?x0 dr:company_hq_location OBJ_1 . }
+select ?x0 where { SUBJ_1 wdt:p26 ?dummy . ?dummy dr:real_full_name ?x0 . }
+select ?x0 where { SUBJ_1 dr:residence ?dummy . ?dummy dr:area ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:wash ?dummy . ?dummy dr:width ?x0 . } order by desc ( ?x0 )
+select count ( distinct ?x0 ) where { ?x0 wdt:p162 OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:borders_country ?dummy . ?dummy dr:period_country ?x0 . }
+select ?x0 where { SUBJ_1 dr:first_ruler ?dummy . ?dummy dr:real_full_name ?x0 . }
+select ?x0 where { SUBJ_1 dr:locatedinclosest ?dummy . ?dummy dr:elevation ?x0 . }
+select ?x0 where { SUBJ_1 dr:location ?dummy . ?dummy dr:length ?x0 . }
+select ?x0 where { SUBJ_1 dr:company_founder ?dummy . ?dummy dr:count_works ?x0 . }
+select ?x0 where { SUBJ_1 dr:relative ?dummy . ?dummy dr:birth_day ?x0 . }
+select ?x0 where { SUBJ_1 dr:isdirectorandactorinfilm ?dummy . ?dummy dr:hasgeneralfilmgenre ?x0 . }
+select count ( distinct ?x0 ) where { ?x0 dr:place_of_origin OBJ_1 . }
+select distinct ?x0 where { ?x0 dr:person_foundation OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:material ?dummy . ?dummy dr:date_exploration ?x0 . }
+select ?x0 where { SUBJ_1 dr:company_inception_place ?dummy . ?dummy dr:border_length ?x0 . }
+select count ( distinct ?x0 ) where { ?x0 dr:native_city OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:narrative_location ?dummy . ?dummy dr:area ?x0 . }
+select ?x0 where { SUBJ_1 dr:iscapitalof ?dummy . ?dummy dr:company_end_date ?x0 . }
+select ?x0 where { SUBJ_1 dr:wash ?dummy . ?dummy dr:area ?x0 . }
+select ?x0 where { SUBJ_1 dr:discoverer ?dummy . ?dummy dr:death_age ?x0 . }
+select ?x0 where { SUBJ_1 dr:present_in_literary_work ?dummy . ?dummy dr:place_of_origin ?x0 . }
+select ?x0 where { SUBJ_1 dr:company_founder ?dummy . ?dummy dr:period_country ?x0 . }
+select ?x0 where { SUBJ_1 dr:locatedin ?dummy . ?dummy dr:period_country ?x0 . }
+select ?x0 where { SUBJ_1 dr:narrative_location ?dummy . ?dummy dr:width ?x0 . }
+select ?x0 where { SUBJ_1 dr:creator ?dummy . ?dummy dr:death_date ?x0 . }
+select count ( distinct ?x0 ) where { SUBJ_1 dr:country_of_citizenship ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:lightest ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:borders_country ?dummy . ?dummy dr:population_density ?x0 . } order by desc ( ?x0 )
+select ?x0 where { SUBJ_1 dr:location ?dummy . ?dummy dr:area ?x0 . }
+select ?x0 where { SUBJ_1 dr:company_boardmembers ?dummy . ?dummy dr:birth_day ?x0 . }
+select ?x0 where { SUBJ_1 dr:locatedin ?dummy . ?dummy dr:date_foundation ?x0 . }
+select distinct ?x0 where { ?x0 dr:main_character_female OBJ_1 . }
+select sum ( ?x0 ) where { SUBJ_1 dr:locatedinclosest ?dummy . ?dummy dr:border_length ?x0 . }
+select count ( distinct ?x0 ) where { ?x0 dr:parts_alliance OBJ_1 . }
+select count ( distinct ?x0 ) where { SUBJ_1 dr:number_of_parts ?x0 . }
+select count ( distinct ?x0 ) where { ?x0 dr:whois OBJ_1 . }
+select count ( distinct ?x0 ) where { ?x0 dr:company_hq_location OBJ_1 . }
+select count ( distinct ?x0 ) where { SUBJ_1 dr:company_products ?x0 . }
+select ?x0 where { SUBJ_1 wdt:p26 ?dummy . ?dummy dr:marriage_count ?x0 . }
+select ?x0 where { SUBJ_1 dr:country_of_citizenship ?dummy . ?dummy dr:area ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:wash ?dummy . ?dummy dr:length ?x0 . } order by desc ( ?x0 )
+select count ( distinct ?x0 ) where { SUBJ_1 dr:main_character ?x0 . }
+select distinct ?x0 where { ?x0 wdt:p162 OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:native_country ?dummy . ?dummy dr:area ?x0 . }
+select distinct ?x0 where { ?x0 dr:ethnic_group OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:influenced_by ?dummy . ?dummy dr:marriage_count ?x0 . }
+select ?x0 where { SUBJ_1 dr:parent ?dummy . ?dummy wdt:p2604 ?x0 . }
+select distinct ?x0 where { ?x0 dr:wash OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:native_country ?dummy . ?dummy dr:period_country ?x0 . }
+select ?x0 where { SUBJ_1 dr:iscapitalof ?dummy . ?dummy dr:period_country ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:borders_country ?dummy . ?dummy dr:population_density ?x0 . } order by desc ( ?x0 )
+select ?x0 where { SUBJ_1 dr:locatedin ?dummy . ?dummy dr:depth ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:chemical_formula ?x0 . }
+select ?x0 where { SUBJ_1 dr:sibling ?dummy . ?dummy wdt:p2604 ?x0 . }
+select distinct ?x0 where { ?x0 dr:child OBJ_1 . }
+select count ( distinct ?x0 ) where { ?x0 dr:first_ruler OBJ_1 . }
+select count ( distinct ?x0 ) where { ?x0 dr:discoverer OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:iscapitalof ?dummy . ?dummy dr:company_end_date ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:valence ?x0 . }
+select count ( distinct ?x0 ) where { SUBJ_1 dr:company_industry ?x0 . }
+select ?x0 where { SUBJ_1 dr:birth_place ?dummy . ?dummy dr:area ?x0 . }
+select distinct ?x0 where { ?x0 dr:main_character_female OBJ_1 . }
+select distinct ?x0 where { SUBJ_1 dr:lightest ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:period_event ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:isrecommendedto ?x0 . }
+select ?x0 where { SUBJ_1 dr:political_own ?dummy . ?dummy dr:area ?x0 . }
+select ?x0 where { SUBJ_1 dr:issimilarto ?dummy . ?dummy dr:hasgeneralfilmgenre ?x0 . }
+select ?x0 where { SUBJ_1 dr:hasauthor ?dummy . ?dummy dr:death_age ?x0 . }
+select ?x0 where { SUBJ_1 dr:political_own ?dummy . ?dummy dr:period_country ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:publication_date ?x0 . }
+select ?x0 where { ?x0 dr:company_owner OBJ_1 . ?x0 dr:company_owner OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:hasauthor ?dummy . ?dummy dr:pseudonym ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:isdirectorandactorinfilm ?dummy . ?dummy wdt:p444 ?x0 . } order by desc ( ?x0 )
+select ?x0 where { SUBJ_1 dr:residence ?dummy . ?dummy dr:element_by_named_after ?x0 . }
+select count ( distinct ?x0 ) where { ?x0 dr:company_hq_location OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:isdirectorandactorinfilm ?dummy . ?dummy dr:hasgeneralfilmgenre ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:hasgeneralfilmgenre ?x0 . }
+select distinct ?x0 where { ?x0 dr:political_party OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:place_of_origin ?dummy . ?dummy dr:period_country ?x0 . }
+select ?x0 where { SUBJ_1 dr:discoverer ?dummy . ?dummy dr:real_full_name ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:marriage_count ?x0 . }
+select distinct ?x0 where { ?x0 dr:iscapitalof OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:place_of_origin ?dummy . ?dummy dr:period_country ?x0 . }
+select ?x0 where { SUBJ_1 dr:education ?dummy . ?dummy dr:locatedinclosest ?x0 . }
+select count ( distinct ?x0 ) where { SUBJ_1 dr:twitter ?x0 . }
+select ?x0 where { SUBJ_1 dr:parent ?dummy . ?dummy dr:twitter ?x0 . }
+select ?x0 where { SUBJ_1 dr:education ?dummy . ?dummy dr:creation_date ?x0 . }
+select ?x0 where { SUBJ_1 dr:location ?dummy . ?dummy dr:area ?x0 . }
+select ?x0 where { SUBJ_1 dr:locatedinclosest ?dummy . ?dummy dr:elevation ?x0 . }
+select ?x0 where { SUBJ_1 dr:political_own ?dummy . ?dummy dr:date_country_foundation ?x0 . }
+select distinct ?x0 where { ?x0 wdt:p915 OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:narrative_location ?dummy . ?dummy dr:person_foundation ?x0 . }
+select distinct ?x0 where { ?x0 dr:locatedin OBJ_1 . }
+select distinct ?x0 where { SUBJ_1 dr:birth_place ?x0 . }
+select ?x0 where { SUBJ_1 dr:company_hq_location ?dummy . ?dummy dr:period_country ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:person_foundation ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:discoverer ?x0 . }
+select ?x0 where { SUBJ_1 dr:residence ?dummy . ?dummy dr:elevation ?x0 . }
+select distinct ?x0 where { ?x0 dr:person_foundation OBJ_1 . }
+select count ( distinct ?x0 ) where { ?x0 dr:birth_place OBJ_1 . }
+select sum ( ?x0 ) where { SUBJ_1 dr:borders_country ?dummy . ?dummy dr:area ?x0 . }
+select distinct ?x0 where { ?x0 dr:major_component OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:iscapitalof ?dummy . ?dummy dr:population_density ?x0 . }
+select ?x0 where { SUBJ_1 dr:country_of_citizenship ?dummy . ?dummy dr:population_density ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:width ?x0 . }
+select count ( distinct ?x0 ) where { SUBJ_1 dr:isrecommendedto ?dummy . ?dummy dr:hasgeneralfilmgenre ?x0 . }
+select ?x0 where { SUBJ_1 dr:location ?dummy . ?dummy dr:length ?x0 . }
+select count ( distinct ?x0 ) where { SUBJ_1 dr:twitter ?x0 . }
+select count ( distinct ?x0 ) where { SUBJ_1 dr:river_confluence ?x0 . }
+select ?x0 where { SUBJ_1 dr:isrecommendedto ?dummy . ?dummy wdt:p2130 ?x0 . }
+select ?x0 where { SUBJ_1 dr:borders_country ?dummy . ?dummy dr:period_country ?x0 . }
+select ?x0 where { SUBJ_1 dr:author ?dummy . ?dummy dr:death_date ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:company_hq_location ?x0 . }
+select count ( distinct ?x0 ) where { ?x0 dr:company_owner OBJ_1 . }
+select count ( distinct ?x0 ) where { SUBJ_1 dr:company_boardmembers ?x0 . }
+select count ( distinct ?x0 ) where { ?x0 dr:whois OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:locatedin ?dummy . ?dummy dr:population_density ?x0 . }
+select ?x0 where { SUBJ_1 dr:political_own ?dummy . ?dummy dr:border_length ?x0 . }
+select ?x0 where { SUBJ_1 dr:native_country ?dummy . ?dummy dr:area ?x0 . }
+select ?x0 where { SUBJ_1 dr:company_director ?dummy . ?dummy dr:main_field_of_work ?x0 . }
+select distinct ?x0 where { SUBJ_1 wdt:p58 ?x0 . }
+select ?x0 where { SUBJ_1 dr:location ?dummy . ?dummy dr:length ?x0 . }
+select ?x0 where { SUBJ_1 wdt:p26 ?dummy . ?dummy dr:marriage_count ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:isdirectorandactorinfilm ?dummy . ?dummy dr:haskinopoiskrating ?x0 . } order by desc ( ?x0 )
+select ?x0 where { SUBJ_1 dr:birth_place ?dummy . ?dummy dr:elevation ?x0 . }
+select count ( distinct ?x0 ) where { ?x0 dr:birth_place OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:major_component ?dummy . ?dummy dr:alias ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:birth_day ?x0 . }
+select ?x0 where { SUBJ_1 dr:borders_country ?dummy . ?dummy dr:population_count ?x0 . }
+select ?x0 where { SUBJ_1 dr:locatedin ?dummy . ?dummy dr:length ?x0 . }
+select distinct ?x0 where { ?x0 dr:major_component OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:locatedinclosest ?dummy . ?dummy dr:date_country_foundation ?x0 . }
+select ?x0 where { SUBJ_1 dr:locatedinclosest ?dummy . ?dummy dr:population_count ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:lightest ?x0 . }
+select ?x0 where { SUBJ_1 dr:river_confluence ?dummy . ?dummy dr:width ?x0 . }
+select ?x0 where { SUBJ_1 dr:residence ?dummy . ?dummy dr:area ?x0 . }
+select count ( distinct ?x0 ) where { SUBJ_1 dr:river_inflows ?x0 . }
+select ?x0 where { SUBJ_1 dr:political_own ?dummy . ?dummy dr:border_length ?x0 . }
+select count ( distinct ?x0 ) where { ?x0 dr:company_inception_place OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:company_inception_place ?dummy . ?dummy dr:date_foundation ?x0 . }
+select ?x0 where { SUBJ_1 dr:native_country ?dummy . ?dummy dr:border_length ?x0 . }
+select ?x0 where { SUBJ_1 dr:sibling ?dummy . ?dummy dr:real_full_name ?x0 . }
+select ?x0 where { SUBJ_1 dr:company_parent ?dummy . ?dummy dr:company_logo ?x0 . }
+select ?x0 where { SUBJ_1 dr:residence ?dummy . ?dummy dr:date_country_foundation ?x0 . }
+select ?x0 where { SUBJ_1 dr:locatedin ?dummy . ?dummy dr:period_country ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:author ?x0 . }
+select ?x0 where { SUBJ_1 dr:major_component ?dummy . ?dummy dr:valence ?x0 . }
+select ?x0 where { SUBJ_1 dr:first_ruler ?dummy . ?dummy dr:marriage_count ?x0 . }
+select count ( distinct ?x0 ) where { ?x0 dr:river_confluence OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:borders_country ?dummy . ?dummy dr:period_country ?x0 . }
+select ?x0 where { SUBJ_1 dr:influenced_by ?dummy . ?dummy dr:hasgeneralmusicgenre ?x0 . }
+select ?x0 where { SUBJ_1 dr:main_character ?dummy . ?dummy dr:inception ?x0 . }
+select distinct ?x0 where { ?x0 dr:locatedin OBJ_1 . }
+select distinct ?x0 where { SUBJ_1 dr:child ?x0 . }
+select ?x0 where { SUBJ_1 dr:political_party ?dummy . ?dummy dr:company_inception_date ?x0 . }
+select distinct ?x0 where { SUBJ_1 wdt:p1303 ?x0 . }
+select ?x0 where { SUBJ_1 dr:element_by_named_after ?dummy . ?dummy dr:alias ?x0 . }
+select distinct ?x0 where { ?x0 dr:company_owner OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:locatedin ?dummy . ?dummy dr:length ?x0 . }
+select ?x0 where { SUBJ_1 dr:company_hq_location ?dummy . ?dummy dr:company_inception_date ?x0 . }
+select ?x0 where { SUBJ_1 dr:parent ?dummy . ?dummy dr:name ?x0 . }
+select sum ( ?x0 ) where { SUBJ_1 dr:issimilarto ?dummy . ?dummy wdt:p2047 ?x0 . }
+select ?x0 where { SUBJ_1 dr:author ?dummy . ?dummy dr:birth_day ?x0 . }
+select ?x0 where { SUBJ_1 dr:wash ?dummy . ?dummy dr:area ?x0 . }
+select ?x0 where { SUBJ_1 dr:locatedinclosest ?dummy . ?dummy dr:elevation ?x0 . }
+select ?x0 where { SUBJ_1 dr:narrative_location ?dummy . ?dummy dr:elevation ?x0 . }
+select distinct ?x0 where { ?x0 dr:company_founder OBJ_1 . }
+select count ( distinct ?x0 ) where { SUBJ_1 dr:main_character ?x0 . }
+select ?x0 where { SUBJ_1 dr:location ?dummy . ?dummy dr:area ?x0 . }
+select ?x0 where { SUBJ_1 dr:child ?dummy . ?dummy dr:main_field_of_work ?x0 . }
+select ?x0 where { SUBJ_1 dr:company_parent ?dummy . ?dummy dr:company_logo ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:climate ?x0 . }
+select ?x0 where { SUBJ_1 dr:birth_place ?dummy . ?dummy dr:iscapitalof ?x0 . }
+select count ( distinct ?x0 ) where { ?x0 dr:company_inception_place OBJ_1 . }
+select distinct ?x0 where { ?x0 dr:native_city OBJ_1 . }
+select distinct ?x0 where { SUBJ_1 dr:count_works ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:main_character_female ?x0 . }
+select distinct ?x0 where { ?x0 dr:mother OBJ_1 . }
+select ?x0 where { ?x0 dr:author OBJ_1 . ?x0 dr:author OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:residence ?dummy . ?dummy dr:border_length ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:inception ?x0 . }
+select ?x0 where { SUBJ_1 dr:place_of_origin ?dummy . ?dummy dr:date_country_end ?x0 . }
+select ?x0 where { SUBJ_1 dr:major_component ?dummy . ?dummy dr:valence ?x0 . }
+select count ( distinct ?x0 ) where { ?x0 dr:narrative_location OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:company_products ?dummy . ?dummy dr:alias ?x0 . }
+select count ( distinct ?x0 ) where { ?x0 dr:company_products OBJ_1 . }
+select ?x0 where { SUBJ_1 wdt:p26 ?dummy . ?dummy dr:work_period_start ?x0 . }
+select ?x0 where { SUBJ_1 dr:isdirectorandactorinfilm ?dummy . ?dummy dr:hasgeneralfilmgenre ?x0 . }
+select ?x0 where { SUBJ_1 dr:influenced_by ?dummy . ?dummy dr:main_field_of_work ?x0 . }
+select ?x0 where { SUBJ_1 dr:author ?dummy . ?dummy dr:main_field_of_work ?x0 . }
+select ?x0 where { SUBJ_1 dr:company_hq_location ?dummy . ?dummy dr:elevation ?x0 . }
+select sum ( ?x0 ) where { SUBJ_1 dr:issimilarto ?dummy . ?dummy wdt:p2047 ?x0 . }
+select distinct ?x0 where { ?x0 dr:element_by_named_after OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:location ?dummy . ?dummy dr:elevation ?x0 . }
+select ?x0 where { SUBJ_1 dr:birth_place ?dummy . ?dummy dr:locatedinclosest ?x0 . }
+select count ( distinct ?x0 ) where { ?x0 dr:whois OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:first_ruler ?dummy . ?dummy dr:marriage_count ?x0 . }
+select ?x0 where { SUBJ_1 dr:hasauthor ?dummy . ?dummy dr:native_city ?x0 . }
+select ?x0 where { SUBJ_1 dr:creator ?dummy . ?dummy dr:child_count ?x0 . }
+select ?x0 where { SUBJ_1 dr:father ?dummy . ?dummy dr:main_field_of_work ?x0 . }
+select ?x0 where { SUBJ_1 dr:sibling ?dummy . ?dummy dr:work_period_start ?x0 . }
+select count ( distinct ?x0 ) where { ?x0 dr:company_inception_place OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:author ?dummy . ?dummy dr:nickname ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:river_inflows ?dummy . ?dummy dr:length ?x0 . } order by desc ( ?x0 )
+select ?x0 where { SUBJ_1 dr:company_inception_place ?dummy . ?dummy dr:population_count ?x0 . }
+select count ( distinct ?x0 ) where { SUBJ_1 dr:main_character ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:wash ?dummy . ?dummy dr:width ?x0 . } order by desc ( ?x0 )
+select distinct ?x0 where { SUBJ_1 wdt:p1303 ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:isdirectorandactorinfilm ?dummy . ?dummy wdt:p444 ?x0 . } order by desc ( ?x0 )
+select ?x0 where { SUBJ_1 dr:death_cause ?dummy . ?dummy dr:marriage_fact_now ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:elevation ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:hasgeneralfilmgenre ?x0 . }
+select count ( distinct ?x0 ) where { SUBJ_1 dr:company_products ?x0 . }
+select ?x0 where { SUBJ_1 dr:first_ruler ?dummy . ?dummy dr:birth_day ?x0 . }
+select count ( distinct ?x0 ) where { ?x0 dr:first_ruler OBJ_1 . }
+select count ( distinct ?x0 ) where { ?x0 dr:creator OBJ_1 . }
+select count ( distinct ?x0 ) where { ?x0 dr:relative OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:isdirectorandactorinfilm ?dummy . ?dummy wdt:p577 ?x0 . }
+select ?x0 where { SUBJ_1 dr:locatedin ?dummy . ?dummy dr:population_count ?x0 . }
+select distinct ?x0 where { ?x0 dr:mother OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:locatedin ?dummy . ?dummy dr:length ?x0 . }
+select ?x0 where { SUBJ_1 dr:relative ?dummy . ?dummy dr:birth_day ?x0 . }
+select distinct ?x0 where { ?x0 dr:child OBJ_1 . }
+select count ( distinct ?x0 ) where { SUBJ_1 dr:composed ?x0 . }
+select ?x0 where { SUBJ_1 dr:hasauthor ?dummy . ?dummy dr:twitter ?x0 . }
+select ?x0 where { SUBJ_1 dr:narrative_location ?dummy . ?dummy dr:borders_country ?x0 . }
+select ?x0 where { SUBJ_1 dr:creator ?dummy . ?dummy dr:marriage_count ?x0 . }
+select ?x0 where { SUBJ_1 dr:company_hq_location ?dummy . ?dummy dr:date_foundation ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:isdirectorandactorinfilm ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:father ?x0 . }
+select ?x0 where { SUBJ_1 dr:locatedinclosest ?dummy . ?dummy dr:date_country_end ?x0 . }
+select count ( distinct ?x0 ) where { SUBJ_1 dr:material ?x0 . }
+select ?x0 where { SUBJ_1 dr:narrative_location ?dummy . ?dummy dr:area ?x0 . }
+select count ( distinct ?x0 ) where { ?x0 dr:child OBJ_1 . }
+select count ( distinct ?x0 ) where { SUBJ_1 dr:company_director ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:wash ?x0 . }
+select ?x0 where { SUBJ_1 dr:element_by_named_after ?dummy . ?dummy dr:valence ?x0 . }
+select ?x0 where { SUBJ_1 dr:locatedin ?dummy . ?dummy dr:count_works_char ?x0 . }
+select ?x0 where { SUBJ_1 dr:narrative_location ?dummy . ?dummy dr:width ?x0 . }
+select count ( distinct ?x0 ) where { SUBJ_1 dr:discoverer ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:residence ?x0 . }
+select ?x0 where { SUBJ_1 dr:native_city ?dummy . ?dummy dr:date_foundation ?x0 . }
+select ?x0 where { SUBJ_1 dr:father ?dummy . ?dummy dr:real_full_name ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:length ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:hasauthor ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:child ?x0 . }
+select ?x0 where { SUBJ_1 dr:locatedin ?dummy . ?dummy dr:length ?x0 . }
+select ?x0 where { SUBJ_1 dr:education ?dummy . ?dummy dr:company_inception_date ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:company_boardmembers ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:count_works ?x0 . }
+select ?x0 where { SUBJ_1 dr:locatedinclosest ?dummy . ?dummy dr:elevation ?x0 . }
+select ?x0 where { SUBJ_1 dr:birth_place ?dummy . ?dummy dr:locatedinclosest ?x0 . }
+select ?x0 where { SUBJ_1 dr:relative ?dummy . ?dummy dr:death_date ?x0 . }
+select distinct ?x0 where { ?x0 dr:native_country OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:child ?dummy . ?dummy dr:work_period_start ?x0 . }
+select ?x0 where { SUBJ_1 dr:birth_place ?dummy . ?dummy dr:population_density ?x0 . }
+select ?x0 where { SUBJ_1 dr:parent ?dummy . ?dummy dr:name ?x0 . }
+select count ( distinct ?x0 ) where { ?x0 dr:field_of_work OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:parent ?dummy . ?dummy dr:marriage_count ?x0 . }
+select count ( distinct ?x0 ) where { SUBJ_1 dr:hasauthor ?x0 . }
+select ?x0 where { SUBJ_1 dr:major_component ?dummy . ?dummy dr:group ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:present_in_literary_work ?x0 . }
+select ?x0 where { SUBJ_1 dr:present_in_literary_work ?dummy . ?dummy dr:place_of_origin ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:wash ?dummy . ?dummy dr:width ?x0 . } order by desc ( ?x0 )
+select distinct ?x0 where { SUBJ_1 dr:isdirectorandactorinfilm ?x0 . }
+select sum ( ?x0 ) where { SUBJ_1 dr:issimilarto ?dummy . ?dummy wdt:p2047 ?x0 . }
+select ?x0 where { SUBJ_1 dr:native_country ?dummy . ?dummy dr:period_country ?x0 . }
+select ?x0 where { SUBJ_1 dr:native_country ?dummy . ?dummy dr:population_density ?x0 . }
+select ?x0 where { SUBJ_1 dr:locatedinclosest ?dummy . ?dummy dr:period_country ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:wash ?dummy . ?dummy dr:length ?x0 . } order by desc ( ?x0 )
+select ?x0 where { SUBJ_1 dr:discoverer ?dummy . ?dummy dr:main_field_of_work ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:ethnic_group ?x0 . }
+select ?x0 where { SUBJ_1 dr:residence ?dummy . ?dummy dr:elevation ?x0 . }
+select count ( distinct ?x0 ) where { SUBJ_1 dr:company_products ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:company_owner ?x0 . }
+select distinct ?x0 where { SUBJ_1 wdt:p58 ?x0 . }
+select distinct ?x0 where { ?x0 dr:native_city OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:birth_place ?dummy . ?dummy dr:date_foundation ?x0 . }
+select ?x0 where { SUBJ_1 dr:company_inception_place ?dummy . ?dummy dr:border_length ?x0 . }
+select ?x0 where { SUBJ_1 dr:mother ?dummy . ?dummy dr:marriage_count ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:width ?x0 . }
+select ?x0 where { SUBJ_1 dr:location ?dummy . ?dummy dr:population_density ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:number_of_parts ?x0 . }
+select count ( distinct ?x0 ) where { ?x0 dr:residence OBJ_1 . }
+select distinct ?x0 where { SUBJ_1 dr:death_cause ?x0 . }
+select ?x0 where { SUBJ_1 dr:locatedinclosest ?dummy . ?dummy dr:population_density ?x0 . }
+select count ( distinct ?x0 ) where { SUBJ_1 dr:sibling ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:main_character_female ?x0 . }
+select count ( distinct ?x0 ) where { SUBJ_1 dr:company_founder ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:wash ?dummy . ?dummy dr:length ?x0 . } order by desc ( ?x0 )
+select distinct ?x0 where { SUBJ_1 dr:isdirectorandactorinfilm ?x0 . }
+select count ( distinct ?x0 ) where { ?x0 dr:company_director OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:river_confluence ?dummy . ?dummy dr:locatedinclosest ?x0 . }
+select ?x0 where { SUBJ_1 dr:borders_country ?dummy . ?dummy dr:date_country_foundation ?x0 . }
+select ?x0 where { SUBJ_1 dr:company_owner ?dummy . ?dummy dr:company_inception_date ?x0 . }
+select distinct ?x0 where { ?x0 dr:political_party OBJ_1 . }
+select distinct ?x0 where { SUBJ_1 dr:company_director ?x0 . }
+select ?x0 where { SUBJ_1 dr:birth_place ?dummy . ?dummy dr:date_foundation ?x0 . }
+select ?x0 where { SUBJ_1 dr:company_founder ?dummy . ?dummy dr:count_works ?x0 . }
+select ?x0 where { SUBJ_1 dr:sibling ?dummy . ?dummy dr:nickname ?x0 . }
+select ?x0 where { SUBJ_1 dr:locatedinclosest ?dummy . ?dummy dr:elevation ?x0 . }
+select ?x0 where { SUBJ_1 dr:locatedin ?dummy . ?dummy dr:population_density ?x0 . }
+select distinct ?x0 where { ?x0 dr:dedicated_to OBJ_1 . }
+select count ( distinct ?x0 ) where { SUBJ_1 dr:has_parts ?x0 . }
+select distinct ?x0 where { ?x0 dr:influenced_by OBJ_1 . }
+select distinct ?x0 where { SUBJ_1 dr:borders_country ?dummy . ?dummy dr:population_density ?x0 . } order by desc ( ?x0 )
+select ?x0 where { SUBJ_1 dr:locatedin ?dummy . ?dummy dr:population_density ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:creator ?x0 . }
+select count ( distinct ?x0 ) where { ?x0 dr:relative OBJ_1 . }
+select distinct ?x0 where { SUBJ_1 dr:father ?x0 . }
+select ?x0 where { SUBJ_1 dr:company_owner ?dummy . ?dummy dr:birth_day ?x0 . }
+select count ( distinct ?x0 ) where { ?x0 dr:first_ruler OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:person_foundation ?dummy . ?dummy dr:period_country ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:valence ?x0 . }
+select distinct ?x0 where { ?x0 dr:dedicated_to OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:country_of_citizenship ?dummy . ?dummy dr:date_country_foundation ?x0 . }
+select ?x0 where { SUBJ_1 dr:isdirectorandactorinfilm ?dummy . ?dummy wdt:p2047 ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:residence ?x0 . }
+select ?x0 where { SUBJ_1 dr:company_owner ?dummy . ?dummy dr:company_employment ?x0 . }
+select ?x0 where { SUBJ_1 dr:element_by_named_after ?dummy . ?dummy dr:alias ?x0 . }
+select ?x0 where { SUBJ_1 dr:narrative_location ?dummy . ?dummy dr:area ?x0 . }
+select ?x0 where { SUBJ_1 dr:locatedin ?dummy . ?dummy dr:period_country ?x0 . }
+select count ( distinct ?x0 ) where { SUBJ_1 dr:alias ?x0 . }
+select count ( distinct ?x0 ) where { SUBJ_1 dr:company_director ?x0 . }
+select ?x0 where { SUBJ_1 dr:major_component ?dummy . ?dummy dr:valence ?x0 . }
+select count ( distinct ?x0 ) where { ?x0 dr:company_products OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:locatedinclosest ?dummy . ?dummy dr:name ?x0 . }
+select ?x0 where { SUBJ_1 dr:location ?dummy . ?dummy dr:length ?x0 . }
+select ?x0 where { SUBJ_1 dr:major_component ?dummy . ?dummy dr:alias ?x0 . }
+select count ( distinct ?x0 ) where { ?x0 dr:first_ruler OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:company_founder ?dummy . ?dummy dr:area ?x0 . }
+select ?x0 where { SUBJ_1 dr:locatedin ?dummy . ?dummy dr:width ?x0 . }
+select count ( distinct ?x0 ) where { ?x0 dr:company_director OBJ_1 . }
+select distinct ?x0 where { SUBJ_1 dr:country_of_citizenship ?x0 . }
+select ?x0 where { SUBJ_1 dr:company_inception_place ?dummy . ?dummy dr:political_own ?x0 . }
+select ?x0 where { SUBJ_1 dr:residence ?dummy . ?dummy dr:population_density ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:isdirectorandactorinfilm ?dummy . ?dummy dr:haskinopoiskrating ?x0 . } order by desc ( ?x0 )
+select ?x0 where { SUBJ_1 dr:major_component ?dummy . ?dummy dr:valence ?x0 . }
+select distinct ?x0 where { ?x0 dr:company_inception_place OBJ_1 . }
+select distinct ?x0 where { SUBJ_1 dr:author ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:pseudonym ?x0 . }
+select count ( distinct ?x0 ) where { SUBJ_1 dr:native_language ?x0 . }
+select distinct ?x0 where { ?x0 dr:country_of_citizenship OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:birth_place ?dummy . ?dummy dr:area ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:company_employment ?x0 . }
+select distinct ?x0 where { ?x0 dr:discoverer OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:company_founder ?dummy . ?dummy dr:count_works ?x0 . }
+select ?x0 where { SUBJ_1 dr:place_of_origin ?dummy . ?dummy dr:period_country ?x0 . }
+select count ( distinct ?x0 ) where { SUBJ_1 dr:has_parts ?x0 . }
+select distinct ?x0 where { ?x0 wdt:p495 OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:locatedin ?dummy . ?dummy dr:company_inception_date ?x0 . }
+select ?x0 where { SUBJ_1 dr:locatedin ?dummy . ?dummy dr:border_length ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:sibling ?dummy . ?dummy dr:height ?x0 . } order by desc ( ?x0 )
+select distinct ?x0 where { SUBJ_1 dr:population_density ?x0 . }
+select ?x0 where { SUBJ_1 dr:child ?dummy . ?dummy dr:marriage_count ?x0 . }
+select count ( distinct ?x0 ) where { ?x0 dr:native_city OBJ_1 . }
+select distinct ?x0 where { SUBJ_1 dr:borders_country ?dummy . ?dummy dr:population_density ?x0 . } order by desc ( ?x0 )
+select ?x0 where { SUBJ_1 dr:locatedin ?dummy . ?dummy dr:count_works ?x0 . }
+select count ( distinct ?x0 ) where { ?x0 dr:wash OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:element_by_named_after ?dummy . ?dummy dr:valence ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:isrecommendedto ?x0 . }
+select ?x0 where { SUBJ_1 dr:influenced_by ?dummy . ?dummy dr:death_age ?x0 . }
+select ?x0 where { SUBJ_1 dr:location ?dummy . ?dummy dr:length ?x0 . }
+select count ( distinct ?x0 ) where { ?x0 dr:birth_place OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:company_hq_location ?dummy . ?dummy dr:population_count ?x0 . }
+select distinct ?x0 where { ?x0 dr:first_ruler OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:parts_alliance ?dummy . ?dummy dr:period_country ?x0 . }
+select ?x0 where { SUBJ_1 dr:locatedin ?dummy . ?dummy dr:width ?x0 . }
+select count ( distinct ?x0 ) where { ?x0 dr:narrative_location OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:residence ?dummy . ?dummy dr:area ?x0 . }
+select ?x0 where { SUBJ_1 dr:locatedin ?dummy . ?dummy dr:date_country_end ?x0 . }
+select ?x0 where { ?x0 dr:company_owner OBJ_1 . ?x0 dr:company_owner OBJ_1 . }
+select distinct ?x0 where { SUBJ_1 dr:number_of_parts ?x0 . }
+select count ( distinct ?x0 ) where { ?x0 dr:wash OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:material ?dummy . ?dummy dr:alias ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:field_of_work ?x0 . }
+select ?x0 where { SUBJ_1 dr:parent ?dummy . ?dummy dr:count_works_char ?x0 . }
+select count ( distinct ?x0 ) where { SUBJ_1 dr:sibling ?x0 . }
+select ?x0 where { SUBJ_1 dr:locatedin ?dummy . ?dummy dr:length ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:wash ?dummy . ?dummy dr:width ?x0 . } order by desc ( ?x0 )
+select distinct ?x0 where { ?x0 dr:heaviest OBJ_1 . }
+select count ( distinct ?x0 ) where { ?x0 dr:locatedinclosest OBJ_1 . }
+select distinct ?x0 where { SUBJ_1 dr:company_parent ?x0 . }
+select ?x0 where { SUBJ_1 dr:narrative_location ?dummy . ?dummy dr:date_country_foundation ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:river_confluence ?x0 . }
+select ?x0 where { SUBJ_1 dr:company_founder ?dummy . ?dummy dr:population_density ?x0 . }
+select ?x0 where { SUBJ_1 dr:first_ruler ?dummy . ?dummy dr:marriage_fact_now ?x0 . }
+select count ( distinct ?x0 ) where { ?x0 dr:company_director OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:locatedin ?dummy . ?dummy dr:depth ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:locatedin ?x0 . }
+select ?x0 where { SUBJ_1 dr:narrative_location ?dummy . ?dummy dr:area ?x0 . }
+select ?x0 where { SUBJ_1 dr:child ?dummy . ?dummy dr:count_works ?x0 . }
+select ?x0 where { SUBJ_1 dr:locatedin ?dummy . ?dummy dr:border_length ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:author ?x0 . }
+select ?x0 where { SUBJ_1 dr:locatedinclosest ?dummy . ?dummy dr:numberneighboringcountries ?x0 . }
+select ?x0 where { SUBJ_1 dr:major_component ?dummy . ?dummy dr:alias ?x0 . }
+select count ( distinct ?x0 ) where { SUBJ_1 dr:present_in_literary_work ?dummy . ?dummy dr:number_of_parts ?x0 . }
+select ?x0 where { SUBJ_1 dr:company_products ?dummy . ?dummy dr:company_logo ?x0 . }
+select distinct ?x0 where { ?x0 dr:company_owner OBJ_1 . }
+select distinct ?x0 where { ?x0 dr:mother OBJ_1 . }
+select distinct ?x0 where { SUBJ_1 dr:numberneighboringcountries ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:width ?x0 . }
+select distinct ?x0 where { ?x0 dr:influenced_by OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:birth_place ?dummy . ?dummy dr:area ?x0 . }
+select distinct ?x0 where { ?x0 dr:reformer OBJ_1 . }
+select count ( distinct ?x0 ) where { ?x0 dr:languages OBJ_1 . }
+select distinct ?x0 where { SUBJ_1 dr:borders_country ?dummy . ?dummy dr:population_density ?x0 . } order by desc ( ?x0 )
+select ?x0 where { SUBJ_1 dr:company_owner ?dummy . ?dummy dr:company_employment ?x0 . }
+select ?x0 where { SUBJ_1 dr:company_founder ?dummy . ?dummy dr:company_logo ?x0 . }
+select distinct ?x0 where { ?x0 dr:wash OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:iscapitalof ?dummy . ?dummy dr:area ?x0 . }
+select count ( distinct ?x0 ) where { SUBJ_1 dr:material ?x0 . }
+select count ( distinct ?x0 ) where { ?x0 dr:influenced_by OBJ_1 . }
+select distinct ?x0 where { SUBJ_1 dr:instagram ?x0 . }
+select count ( distinct ?x0 ) where { ?x0 dr:country_of_citizenship OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:discoverer ?dummy . ?dummy dr:company_inception_date ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:marriage_count ?x0 . }
+select ?x0 where { SUBJ_1 dr:issimilarto ?dummy . ?dummy dr:hasgeneralfilmgenre ?x0 . }
+select ?x0 where { SUBJ_1 dr:borders_country ?dummy . ?dummy dr:period_country ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:company_logo ?x0 . }
+select ?x0 where { SUBJ_1 dr:location ?dummy . ?dummy dr:locatedinclosest ?x0 . }
+select ?x0 where { SUBJ_1 dr:company_owner ?dummy . ?dummy dr:company_logo ?x0 . }
+select ?x0 where { SUBJ_1 dr:company_founder ?dummy . ?dummy dr:marriage_count ?x0 . }
+select ?x0 where { SUBJ_1 dr:political_own ?dummy . ?dummy dr:period_country ?x0 . }
+select ?x0 where { SUBJ_1 dr:company_parent ?dummy . ?dummy dr:company_employment ?x0 . }
+select ?x0 where { SUBJ_1 dr:residence ?dummy . ?dummy dr:elevation ?x0 . }
+select count ( distinct ?x0 ) where { SUBJ_1 dr:company_industry ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:native_language ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:river_confluence ?x0 . }
+select ?x0 where { SUBJ_1 dr:location ?dummy . ?dummy dr:length ?x0 . }
+select distinct ?x0 where { SUBJ_1 wdt:p1971 ?x0 . }
+select ?x0 where { SUBJ_1 dr:locatedin ?dummy . ?dummy dr:length ?x0 . }
+select count ( distinct ?x0 ) where { ?x0 dr:influenced_by OBJ_1 . }
+select count ( distinct ?x0 ) where { SUBJ_1 wdt:p1303 ?x0 . }
+select ?x0 where { SUBJ_1 dr:influenced_by ?dummy . ?dummy dr:marriage_count ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:person_foundation ?x0 . }
+select ?x0 where { SUBJ_1 dr:political_own ?dummy . ?dummy dr:population_count ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:count_works_char ?x0 . }
+select count ( distinct ?x0 ) where { ?x0 dr:narrative_location OBJ_1 . }
+select count ( distinct ?x0 ) where { SUBJ_1 dr:nominated_for ?x0 . }
+select count ( distinct ?x0 ) where { ?x0 dr:creator OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:locatedin ?dummy . ?dummy dr:border_length ?x0 . }
+select ?x0 where { SUBJ_1 dr:locatedin ?dummy . ?dummy dr:length ?x0 . }
+select count ( distinct ?x0 ) where { SUBJ_1 dr:discoverer ?x0 . }
+select ?x0 where { SUBJ_1 dr:company_inception_place ?dummy . ?dummy dr:elevation ?x0 . }
+select ?x0 where { SUBJ_1 dr:residence ?dummy . ?dummy dr:area ?x0 . }
+select ?x0 where { SUBJ_1 dr:parent ?dummy . ?dummy dr:birth_day ?x0 . }
+select ?x0 where { SUBJ_1 dr:mother ?dummy . ?dummy dr:child_count ?x0 . }
+select ?x0 where { SUBJ_1 dr:wrote ?dummy . ?dummy dr:publication_date ?x0 . }
+select ?x0 where { SUBJ_1 dr:author ?dummy . ?dummy wdt:p2604 ?x0 . }
+select ?x0 where { SUBJ_1 dr:discoverer ?dummy . ?dummy dr:company_inception_date ?x0 . }
+select ?x0 where { SUBJ_1 dr:locatedin ?dummy . ?dummy dr:depth ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:valence ?x0 . }
+select count ( distinct ?x0 ) where { SUBJ_1 dr:native_language ?x0 . }
+select count ( distinct ?x0 ) where { ?x0 dr:relative OBJ_1 . }
+select distinct ?x0 where { ?x0 dr:composed OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:country_of_citizenship ?dummy . ?dummy dr:population_density ?x0 . }
+select ?x0 where { SUBJ_1 dr:native_country ?dummy . ?dummy dr:period_country ?x0 . }
+select ?x0 where { SUBJ_1 dr:location ?dummy . ?dummy dr:area ?x0 . }
+select ?x0 where { SUBJ_1 dr:narrative_location ?dummy . ?dummy dr:area ?x0 . }
+select ?x0 where { SUBJ_1 dr:native_country ?dummy . ?dummy dr:numberneighboringcountries ?x0 . }
+select ?x0 where { SUBJ_1 dr:influenced_by ?dummy . ?dummy dr:death_age ?x0 . }
+select ?x0 where { SUBJ_1 dr:discoverer ?dummy . ?dummy dr:death_age ?x0 . }
+select distinct ?x0 where { ?x0 dr:element_by_named_after OBJ_1 . }
+select ?x0 where { SUBJ_1 dr:locatedinclosest ?dummy . ?dummy dr:elevation ?x0 . }
+select ?x0 where { SUBJ_1 dr:discoverer ?dummy . ?dummy dr:count_works ?x0 . }
+select distinct ?x0 where { SUBJ_1 dr:main_character_female ?x0 . }
+select distinct ?x0 where { ?x0 dr:locatedin OBJ_1 . }
+select distinct ?x0 where { SUBJ_1 dr:education ?x0 . }

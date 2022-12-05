@@ -3,7 +3,7 @@ from components.dataset import *
 
 from grammar.grammar import Grammar
 
-from grammar.turk.turk_transition_system import TurkTransitionSystem
+from grammar.sparql.sparql_transition_system import SparqlTransitionSystem
 from models.ASN import ASNParser
 from models import nn_utils
 
@@ -14,8 +14,8 @@ from torch.utils.tensorboard import SummaryWriter
 import hiddenlayer as hl
 
 def train(args):
-    train_writer = SummaryWriter('./checkpoints/logs/train')
-    valid_writer = SummaryWriter('./checkpoints/logs/val')
+    train_writer = SummaryWriter('./checkpoints/sparql/logs/train')
+    valid_writer = SummaryWriter('./checkpoints/sparql/logs/val')
 
     train_set = Dataset.from_bin_file(args.train_file)
     if args.dev_file:
@@ -26,7 +26,7 @@ def train(args):
     grammar = Grammar.from_text(open(args.asdl_file).read())
     # print(grammar)
     # transition_system = Registrable.by_name(args.transition_system)(grammar)
-    transition_system = TurkTransitionSystem(grammar)
+    transition_system = SparqlTransitionSystem(grammar)
     
     parser = ASNParser(args, transition_system, vocab)
     print(parser)

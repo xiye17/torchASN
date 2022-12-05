@@ -22,10 +22,12 @@ class AbstractSyntaxTree(object):
         self.created_time = 0
 
         if realized_fields:
-            assert len(realized_fields) == len(self.production.fields)
-
-            for field in realized_fields:
-                self.add_child(field)
+            # assert len(realized_fields) == len(self.production.fields)
+            try:
+                for field in realized_fields:
+                    self.add_child(field)
+            except:
+                self.add_child(realized_fields)
         else:
             for field in self.production.fields:
                 self.add_child(RealizedField(field))
