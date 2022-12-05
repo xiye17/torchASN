@@ -15,27 +15,20 @@ from grammar.dsl_ast import RealizedField, AbstractSyntaxTree
 # define primitive fields
 unk_attr, predicate, sub, obj, order_d
 
-regex = OrderedQuery(select_stmt arg, where_stmt arg1, order_stmt arg2)
-    | UnorderedQuery(select_stmt arg, where_stmt arg1)
+regex = OrderedQuery(select_stmt left, where_stmt middle, unk_attr col, order_d d)
+    | UnorderedQuery(select_stmt left, where_stmt right)
 
-select_stmt = Select(col_stmt arg)
-
-col_stmt = Sum(col_stmt1)
-    | Count(col_stmt1)
-    | Avg(col_stmt1)
+select_stmt = Sum(col_stmt1 arg)
+    | Count(col_stmt1 arg)
+    | Avg(col_stmt1 arg)
+    | Nothing(col_stmt1 arg)
 
 col_stmt1 = DistinctConst(unk_attr k)
     | Const(unk_attr k)
 
-where_stmt = R0(triplets arg)
+where_stmt = R0(sub left, predicate k, obj right, triplets second) | Trip(sub left, predicate k, obj right)
 
-triplets = R0(triplets arg) | Trip(triplet_sub left, predicate con, triplet_obj)
-
-triplet_sub = ConstSub(sub k) | Const(unk_attr k)
-
-triplet_obj = ConstObj(obj k) | Const(unk_attr k)
-
-order_stmt = Order(unk_attr col, order_d d)
+triplets = R1(sub left, predicate k, obj right, triplets second) | Trip1(sub left, predicate k, obj right)
 """
 
 _NODE_CLASS_TO_RULE = {
