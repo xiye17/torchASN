@@ -46,7 +46,6 @@ def test(args):
         parse_results = []
         for ex in tqdm(test_set, desc='Decoding', file=sys.stdout, total=len(test_set)):
             parse_results.append(parser.naive_parse(ex))
-    # print(parse_results[0].action_tree)
 
     match_results = [ parser.transition_system.compare_ast(e.tgt_ast, r) for e, r in zip(test_set, parse_results)]
     match_acc = sum(match_results) * 1. / len(match_results)

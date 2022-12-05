@@ -22,8 +22,8 @@ def build_dataset_vocab(examples, transition_system, src_size=5000, code_size=50
         type_entry = PrimitiveVocabEntry.from_corpus([[v for t, v in type_primitive_tokens if t == prim_type ]], size=primitive_size, freq_cutoff=primitive_cutoff)
         primitive_entries[prim_type] = type_entry
     
-    for t, e in primitive_entries.items():
-        print(t, e.word_to_id.keys())
+    # for t, e in primitive_entries.items():
+    #     print(t, e.word_to_id.keys())
     return DatasetVocab(src_vocab, code_vocab, primitive_entries)
 
 def extract_primitive_tokens(root, transition_system):

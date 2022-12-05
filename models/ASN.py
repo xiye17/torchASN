@@ -107,7 +107,7 @@ class ASNParser(nn.Module):
             prim_type_modules.append((prim_type.name,
                                       PrimitiveTypeModule(args, prim_type, vocab.primitive_vocabs[prim_type])))
         self.prim_type_dict = nn.ModuleDict(prim_type_modules)
-
+        # print(prim_type_modules)
         self.v_lstm = nn.LSTM(args.enc_hid_size, args.enc_hid_size)
         self.attn = LuongAttention(args.enc_hid_size, 2 * args.enc_hid_size)
         self.dropout = nn.Dropout(args.dropout)
@@ -181,7 +181,7 @@ class ASNParser(nn.Module):
         batch = Batch([ex], self.grammar, self.vocab, train=False)        
         context_vecs, encoder_outputs = self.encode(batch)
         init_state = encoder_outputs
-        print("**************************************")
+        #print("**************************************")
         action_tree = self._naive_parse(self.grammar.root_type, init_state, context_vecs, batch.sent_masks, 1)
 
         return self.transition_system.build_ast_from_actions(action_tree)
@@ -195,8 +195,8 @@ class ASNParser(nn.Module):
 
         # else token needed
         # tgt_token = tgt
-        print('-------------------------------')
-        print("nodetype = ", node_type.name)
+        #print('-------------------------------')
+        #print("nodetype = ", node_type.name)
 
         contexts = self.attn(v_state[0].unsqueeze(0), context_vecs).squeeze(0)
         if depth > 9:
@@ -204,41 +204,41 @@ class ASNParser(nn.Module):
 
         if node_type.is_primitive_type():
             module = self.prim_type_dict[node_type.name]
-            print('primitive module = ', module)
+            #print('primitive module = ', module)
             # scores = mask * module()
             scores = module.score(v_state[0], contexts).cpu().numpy().flatten()
             # scores =  [tgt_action_tree.action.choice_idx]
             # b * choice
             # score = -1 * scores.view([-1])[action_node.action.choice_index]
             choice_idx = np.argmax(scores)
-            print("word = ", module.vocab.get_word(choice_idx))
+            #print("word = ", module.vocab.get_word(choice_idx))
             return ActionTree(GenTokenAction(node_type, module.vocab.get_word(choice_idx)))
 
         
         comp_module = self.comp_type_dict[node_type.name]
-        print("comp type = ", comp_module)
+        #print("comp type = ", comp_module)
         scores = comp_module.score(v_state[0], contexts).cpu().numpy().flatten()
         choice_idx = np.argmax(scores)
-        print("comp_module.productions = ", comp_module.productions)
+        #print("comp_module.productions = ", comp_module.productions)
         production = comp_module.productions[choice_idx]
 
-        print("production = ", production)
+        #print("production = ", production)
         action = ApplyRuleAction(node_type, production)
-        print("action = ", action)
+        #print("action = ", action)
         cnstr = production.constructor
-        print("constructor.name = ", cnstr.name)
+        #print("constructor.name = ", cnstr.name)
         # pass through
         cnstr_module = self.const_type_dict[cnstr.name]
-        print("cnstr module = ", cnstr_module)
+        # print("cnstr module = ", cnstr_module)
         # cnstr_results = const_module.iup()
         # next_states = self.v_lstm( [1 * 1 * x], v_state)
         cnstr_results = cnstr_module.update(self.v_lstm, v_state, contexts)
-        print("BEGIN recursive")
+        #print("BEGIN recursive")
         action_fields = [self._naive_parse(next_field.type, next_state, context_vecs, context_masks, depth+1) for next_field, next_state in zip(cnstr.fields, cnstr_results)]
         # print(action)
-        print("action_fields = ", action_fields)
-        print("END recursive")
-        print("-------------------------------")
+        #print("action_fields = ", action_fields)
+        #print("END recursive")
+        #print("-------------------------------")
         return ActionTree(action, action_fields)
 
     def parse(self, ex):
