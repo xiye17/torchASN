@@ -15,12 +15,12 @@ from datasets.utils import build_dataset_vocab
 
 def load_dataset(split, transition_system):
 
-    prefix = 'data/sparql/'
+    prefix = '/Users/darby/Desktop/MIPT/master/torchASN/data/sparql/'
     src_file = join(prefix, "src-{}.txt".format(split)) # описание словами
     spec_file = join(prefix, "spec-{}.txt".format(split)) # код
 
     # print(src_file)
-    # print(spec_file)
+    # xf(spec_file)
 
     examples = []
     for idx, (src_line, spec_line) in enumerate(zip(open(src_file, encoding="utf8"), open(spec_file, encoding="utf8"))): # итерируемся
@@ -34,11 +34,11 @@ def load_dataset(split, transition_system):
         # print(transition_system.grammar)
         # print(spec_toks)
         spec_ast = regex_expr_to_ast(transition_system.grammar, spec_toks)
-
+        #
         # sanity check
-        # reconstructed_expr = transition_system.ast_to_surface_code(spec_ast)
+        reconstructed_expr = transition_system.ast_to_surface_code(spec_ast)
         # print(spec_line, reconstructed_expr)
-        # assert spec_line == reconstructed_expr
+        assert spec_line == reconstructed_expr
 
         tgt_action_tree = transition_system.get_action_tree(spec_ast)
 
@@ -63,7 +63,7 @@ def load_dataset(split, transition_system):
 
 def make_dataset():
     
-    grammar = Grammar.from_text(open('data/sparql/sparql_asdl.txt').read())
+    grammar = Grammar.from_text(open('/Users/darby/Desktop/MIPT/master/torchASN/data/sparql/sparql_asdl.txt').read())
     transition_system = SparqlTransitionSystem(grammar)
 
 
@@ -73,10 +73,10 @@ def make_dataset():
     # get vocab from actions
     vocab = build_dataset_vocab(train_set, transition_system, src_cutoff=2)
     # cache decision using vocab can be done in train
-    pickle.dump(train_set, open('data/sparql/train.bin', 'wb'))
-    pickle.dump(dev_set, open('data/sparql/dev.bin', 'wb'))
-    pickle.dump(test_set, open('data/sparql/test.bin', 'wb'))
-    pickle.dump(vocab, open('data/sparql/vocab.bin', 'wb'))
+    pickle.dump(train_set, open('/Users/darby/Desktop/MIPT/master/torchASN/data/sparql/train.bin', 'wb'))
+    pickle.dump(dev_set, open('/Users/darby/Desktop/MIPT/master/torchASN/data/sparql/dev.bin', 'wb'))
+    pickle.dump(test_set, open('/Users/darby/Desktop/MIPT/master/torchASN/data/sparql/test.bin', 'wb'))
+    pickle.dump(vocab, open('/Users/darby/Desktop/MIPT/master/torchASN/data/sparql/vocab.bin', 'wb'))
 
 if __name__ == "__main__":
     make_dataset()
