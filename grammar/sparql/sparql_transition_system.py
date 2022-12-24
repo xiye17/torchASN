@@ -1,12 +1,12 @@
 # coding=utf-8
-from .sparql_utils import *
+from grammar.sparql.sparql_utils import *
 
 from grammar.transition_system import TransitionSystem
 
-try:
-    from cStringIO import StringIO
-except:
-    from io import StringIO
+# try:
+#     # from cStringIO import StringIO
+# except:
+from io import StringIO
 
 from grammar.grammar import *
 from grammar.dsl_ast import RealizedField, AbstractSyntaxTree
@@ -50,19 +50,21 @@ _NODE_CLASS_TO_RULE = {
 }
 
 def regex_ast_to_asdl_ast(grammar, reg_ast):
-    # print(reg_ast)
+
     rule = _NODE_CLASS_TO_RULE[reg_ast.node_class]
     # print(grammar._constructor_production_map)
     prod = grammar.get_prod_by_ctr_name(rule)
     # unary
     if rule in ["Sum", "Count", "Avg", "Nothing"]:
-        child_ast_node = regex_ast_to_asdl_ast(grammar, reg_ast.children)
+        child_ast_node = regex_ast_to_asdl_ast(grammar, reg_ast.children[0])
         ast_node = AbstractSyntaxTree(prod,
                                         [RealizedField(prod['arg'], child_ast_node)])
         return ast_node
+
     elif rule in ["UnorderedQuery"]:
         left_ast_node = regex_ast_to_asdl_ast(grammar, reg_ast.children[0])
         right_ast_node = regex_ast_to_asdl_ast(grammar, reg_ast.children[1])
+        # Exact match/ добавить метрику.
 
         ast_node = AbstractSyntaxTree(prod,
                                         [RealizedField(prod['left'], left_ast_node),
@@ -76,9 +78,11 @@ def regex_ast_to_asdl_ast(grammar, reg_ast):
         ast_node = AbstractSyntaxTree(prod,
                                         [RealizedField(prod['left'], left_ast_node),
                                          RealizedField(prod['middle'], middle_ast_node),
-                                        param_left_ast_node,
-                                        param_right_ast_node])
+                                         param_right_ast_node,
+                                         param_left_ast_node,
+                                        ])
         return ast_node
+
     elif rule in ["Trip", "Trip1"]:
         left_ast_node = RealizedField(prod['left'], str(reg_ast.params[0]))
         int_real_node = RealizedField(prod['k'], str(reg_ast.params[1]))
@@ -93,15 +97,16 @@ def regex_ast_to_asdl_ast(grammar, reg_ast):
         left_ast_node = RealizedField(prod['left'], str(reg_ast.params[0]))
         int_real_node = RealizedField(prod['k'], str(reg_ast.params[1]))
         right_ast_node = RealizedField(prod['right'], str(reg_ast.params[2]))
-        second_ast_node = regex_ast_to_asdl_ast(grammar, reg_ast.children)
+        second_ast_node = regex_ast_to_asdl_ast(grammar, reg_ast.children[0])
 
         ast_node = AbstractSyntaxTree(prod,
                                       [left_ast_node,
                                        int_real_node,
                                        right_ast_node,
-                                         RealizedField(prod['second'], second_ast_node)])
+                                       RealizedField(prod['second'], second_ast_node)])
         return ast_node
     elif rule in ["DistinctConst", "Const"]:
+
         int_real_node = RealizedField(prod['k'], str(reg_ast.params))
         ast_node = AbstractSyntaxTree(prod, int_real_node)
         return ast_node
@@ -110,30 +115,45 @@ def regex_ast_to_asdl_ast(grammar, reg_ast):
 
 def regex_expr_to_ast(grammar, reg_tokens):
     reg_ast = build_regex_ast_from_toks(reg_tokens, 0)
-    # assert reg_ast.tokenized_logical_form() == reg_tokens
+
+    assert reg_ast.tokenized_logical_form() == reg_tokens
     return regex_ast_to_asdl_ast(grammar, reg_ast)
 
 def asdl_ast_to_regex_ast(asdl_ast):
+
     rule = asdl_ast.production.constructor.name
-    if rule in ["CharClass", "Const"]:
-        return RegexNode(asdl_ast['arg'].value)
-    elif rule in ["Not", "Star", "StartWith", "EndWith", "Contain", "Concat", "And", "Or"]:
-        node_class = rule.lower()
+    children = []
+
+    node_class = rule.lower()
+
+    if rule in ["R0", "Trip1", "Trip", "R1"]:
+        values = [x.value for x in asdl_ast.fields]
+        if isinstance(values[-1], str): # Trip
+            return RegexNode(node_class, [None], values)
+
+        return RegexNode(node_class, [asdl_ast_to_regex_ast(values[-1])], values[:-1])
+
+    if rule in ["UnorderedQuery"]:
         return RegexNode(node_class, [asdl_ast_to_regex_ast(x.value) for x in asdl_ast.fields])
-    elif rule in ["RepeatAtleast"]:
-        node_class = rule.lower()
-        if asdl_ast['k'].value.isdigit():
-            param = int(asdl_ast['k'].value)
-            child_node = asdl_ast_to_regex_ast(asdl_ast['arg'].value)
-            return RegexNode(node_class, [child_node], [param])
-        else:
-            return RegexNode("none")
-    else:
-        raise ValueError("wrong ast rule", rule)
+
+    if rule in ["OrderedQuery"]:
+        return RegexNode(node_class, [asdl_ast_to_regex_ast(x.value) for x in asdl_ast.fields[:-2]], [x.value for x in asdl_ast.fields[-2:]])
+
+    if rule in ["Count", "Avg", "Sum", "Nothing"]:
+        return RegexNode(node_class, [asdl_ast_to_regex_ast(asdl_ast.fields[0].value)])
+
+    if rule in ["DistinctConst"]:
+        return RegexNode('distinctconst', [None], asdl_ast.fields[0].value)
+    elif rule in ["Const"]:
+        return RegexNode('const', [None], asdl_ast.fields[0].value)
+
+    raise ValueError("wrong ast rule", rule)
 
 def asdl_ast_to_regex_expr(asdl_ast):
     reg_ast = asdl_ast_to_regex_ast(asdl_ast)
+
     return " ".join(reg_ast.tokenized_logical_form())
+
 
 # neglet created time
 def is_equal_ast(this_ast, other_ast):
@@ -157,6 +177,7 @@ def is_equal_ast(this_ast, other_ast):
 # @Registrable.register('regex')
 class SparqlTransitionSystem(TransitionSystem):
     def compare_ast(self, hyp_ast, ref_ast):
+        # TODO: Нужна новая реализация
         return is_equal_ast(hyp_ast, ref_ast)
 
     def ast_to_surface_code(self, asdl_ast):

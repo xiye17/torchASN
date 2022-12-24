@@ -20,7 +20,7 @@ def load_dataset(split, transition_system):
     spec_file = join(prefix, "spec-{}.txt".format(split)) # код
 
     # print(src_file)
-    # print(spec_file)
+    # xf(spec_file)
 
     examples = []
     for idx, (src_line, spec_line) in enumerate(zip(open(src_file, encoding="utf8"), open(spec_file, encoding="utf8"))): # итерируемся
@@ -34,11 +34,11 @@ def load_dataset(split, transition_system):
         # print(transition_system.grammar)
         # print(spec_toks)
         spec_ast = regex_expr_to_ast(transition_system.grammar, spec_toks)
-
+        #
         # sanity check
-        # reconstructed_expr = transition_system.ast_to_surface_code(spec_ast)
+        reconstructed_expr = transition_system.ast_to_surface_code(spec_ast)
         # print(spec_line, reconstructed_expr)
-        # assert spec_line == reconstructed_expr
+        assert spec_line == reconstructed_expr
 
         tgt_action_tree = transition_system.get_action_tree(spec_ast)
 

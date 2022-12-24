@@ -11,7 +11,7 @@ from torch import optim
 import os
 import time
 from torch.utils.tensorboard import SummaryWriter
-import hiddenlayer as hl
+# import hiddenlayer as hl
 
 def train(args):
     train_writer = SummaryWriter('./checkpoints/sparql/logs/train')
@@ -70,8 +70,15 @@ def train(args):
             eval_begin = time.time()
             parser.eval()
             with torch.no_grad():
-                parse_results = [parser.naive_parse(ex) for ex in dev_set]
-            match_results = [transition_system.compare_ast(e.tgt_ast, r) for e, r in zip(dev_set, parse_results)]
+                parse_results = [(parser.naive_parse(ex), ex.tgt_ast) for ex in dev_set]
+                to_print = [transition_system.ast_to_surface_code(x[0]) for x in parse_results]
+                to_print_target = [transition_system.ast_to_surface_code(x[1]) for x in parse_results]
+
+            # print(to_print)
+            # print("-"*10)
+            # print(to_print_target)
+
+            match_results = [x==y for x, y in zip(to_print, to_print_target)]
             match_acc = sum(match_results) * 1. / len(match_results)
             # print('Eval Acc', match_acc)
             print('[epoch {}] eval acc {:.3f}, eval time {:.0f}'.format(epoch, match_acc, time.time() - eval_begin))

@@ -181,9 +181,10 @@ class ASNParser(nn.Module):
         batch = Batch([ex], self.grammar, self.vocab, train=False)        
         context_vecs, encoder_outputs = self.encode(batch)
         init_state = encoder_outputs
-        #print("**************************************")
+        # print("**************************************")
         action_tree = self._naive_parse(self.grammar.root_type, init_state, context_vecs, batch.sent_masks, 1)
 
+        # print(self.transition_system.build_ast_from_actions(action_tree))
         return self.transition_system.build_ast_from_actions(action_tree)
 
     def _naive_parse(self, node_type, v_state, context_vecs, context_masks, depth):

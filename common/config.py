@@ -23,19 +23,20 @@ def _add_train_args(parser):
 
     parser.add_argument('--dev_file', default='./data/sparql/dev.bin',  type=str, help='path to the dev source file')
 
-    parser.add_argument('--enc_hid_size', default=100,  type=int, help='encoder hidden size')
-    parser.add_argument('--src_emb_size', default=100,  type=int, help='sentence embedding size')
-    parser.add_argument('--field_emb_size', default=100, type=int, help='field embedding size')
+    parser.add_argument('--enc_hid_size', default=128,  type=int, help='encoder hidden size')
+    parser.add_argument('--src_emb_size', default=128,  type=int, help='sentence embedding size')
+    parser.add_argument('--field_emb_size', default=128, type=int, help='field embedding size')
     parser.add_argument('--dropout', type=float, default=0.3, help='dropout rate')
 
-    parser.add_argument('--batch_size', default=50,  type=int, help='batch size')
-    parser.add_argument('--max_epoch', default=10, type=int, help='max epoch')
+    parser.add_argument('--batch_size', default=100,  type=int, help='batch size')
+    parser.add_argument('--max_epoch', default=100, type=int, help='max epoch')
 
     parser.add_argument('--clip_grad', type=float, default=10.0, help='clip grad to')
     parser.add_argument('--lr', type=float, default=.003, help='learning rate')
 
-    parser.add_argument('--log_every', default=100, type=int, help='log every iter')
-    parser.add_argument('--run_val_after', type=int, default=5, help='run validation after')
+
+    parser.add_argument('--log_every', default=30, type=int, help='log every iter')
+    parser.add_argument('--run_val_after', type=int, default=0, help='run validation after')
     parser.add_argument('--max_decode_step', default=100, type=int, help='maximum decode step')
 
 def parse_args(mode):
