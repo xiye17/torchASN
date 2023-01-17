@@ -24,16 +24,13 @@ def post_process(x):
 
 def check_equiv(spec0, spec1):
     if spec0 == spec1:
-        # print("exact", spec0, spec1)
         return True
-    # try:
+
     out = subprocess.check_output(
         ['java', '-cp', './external/datagen.jar:./external/lib/*', '-ea', 'datagen.Main', 'equiv',
             spec0, spec1], stderr=subprocess.DEVNULL)
     out = out.decode("utf-8")
     out = out.rstrip()
-    # if out == "true":
-    #     print("true", spec0, spec1)
 
     return out == "true"
 
