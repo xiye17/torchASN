@@ -128,6 +128,7 @@ def build_regex_ast_from_toks(toks, cur):
         cur = toks.index('order')
 
         params = []
+
         params.append(toks[cur+2])
 
         params.append(toks[cur+4])

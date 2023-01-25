@@ -159,7 +159,7 @@ def asdl_ast_to_regex_expr(asdl_ast):
 def is_equal_ast(this_ast, other_ast):
     if not isinstance(other_ast, this_ast.__class__):
         return False
-    #print(this_ast, other_ast)
+    # print(this_ast, other_ast)
 
     if isinstance(this_ast, AbstractSyntaxTree):
         if this_ast.production != other_ast.production:

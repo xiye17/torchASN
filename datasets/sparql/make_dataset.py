@@ -28,7 +28,8 @@ def load_dataset(split, transition_system):
 
         src_line = src_line.rstrip()
         spec_line = spec_line.rstrip()
-        src_toks = src_line.split()
+        # src_toks = src_line.split()
+        src_toks = src_line
         
         spec_toks = spec_line.rstrip().split()
         # print(transition_system.grammar)

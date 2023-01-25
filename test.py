@@ -1,70 +1,48 @@
-import sys
+
 from common.config import *
 from components.dataset import *
 
 from grammar.grammar import Grammar
 
-from grammar.turk.turk_transition_system import TurkTransitionSystem
+from grammar.sparql.sparql_transition_system import SparqlTransitionSystem
 from models.ASN import ASNParser
-from models import nn_utils
-
-from torch import optim
-import os
-
-import subprocess
 from tqdm import tqdm
 
-def post_process(x):
-    x = x.replace("<m0>", "<!>")
-    x = x.replace("<m1>", "<@>")
-    x = x.replace("<m2>", "<#>")
-    x = x.replace("<m3>", "<$>")
-    x = x.replace(" ", "")
-    return x
-
-def check_equiv(spec0, spec1):
-    if spec0 == spec1:
-        # print("exact", spec0, spec1)
-        return True
-    # try:
-    out = subprocess.check_output(
-        ['java', '-cp', './external/datagen.jar:./external/lib/*', '-ea', 'datagen.Main', 'equiv',
-            spec0, spec1], stderr=subprocess.DEVNULL)
-    out = out.decode("utf-8")
-    out = out.rstrip()
-    # if out == "true":
-    #     print("true", spec0, spec1)
-
-    return out == "true"
 
 def test(args):
     test_set = Dataset.from_bin_file(args.test_file)
-    parser = ASNParser.load(args.model_file, ex_args=args)    
+    parser = ASNParser.load(args.model_file, ex_args=args)
 
-    parser.eval()
-    with torch.no_grad():
-        parse_results = []
-        for ex in tqdm(test_set, desc='Decoding', file=sys.stdout, total=len(test_set)):
-            parse_results.append(parser.naive_parse(ex))
+    to_print = list()
+    to_print_target = list()
+    grammar = Grammar.from_text(open(args.asdl_file).read())
+    transition_system = SparqlTransitionSystem(grammar)
 
-    match_results = [ parser.transition_system.compare_ast(e.tgt_ast, r) for e, r in zip(test_set, parse_results)]
+    for dev_set_ in tqdm(test_set.batch_iter(batch_size=1041, shuffle=False)):
+        parser.eval()
+        with torch.no_grad():
+            batch = Batch(dev_set_, parser.grammar, parser.vocab, train=False, cuda=parser.args.cuda)
+            sent_embedding = parser.src_embedding(batch.sents)
+            parse_results = [(parser.naive_parse(sent_embedding[ex, :, :].unsqueeze(0),
+                                                 batch.sent_lens[ex].unsqueeze(0)), dev_set_[ex].tgt_ast) for ex in
+                             range(sent_embedding.shape[0])]
+
+            to_print.extend([transition_system.ast_to_surface_code(x[0]) for x in parse_results])
+            to_print_target.extend([transition_system.ast_to_surface_code(x[1]) for x in parse_results])
+
+
+    match_results = [x == y for x, y in zip(to_print, to_print_target)]
     match_acc = sum(match_results) * 1. / len(match_results)
-    print("Eval Acc", match_acc)
-    # act_tree_to_ast = lambda x: parser.transition_system.build_ast_from_actions(x)
-    # top_asts = [ act_tree_to_ast(x[0].action_tree) if x else None for x in parse_results]
-    top_codes = [parser.transition_system.ast_to_surface_code(x) for x in parse_results]
-    # match_results = [ parser.transition_system.compare_ast(e.tgt_ast, r) for e, r in zip(test_set, top_asts)]
-    match_results = [ " ".join(e.tgt_toks) == r for e, r in zip(test_set, top_codes)]
-    # top_asts = [parser.transition_system]
+    print('Eval Acc', match_acc)
+    print("\n".join(to_print[:10]))
+    print("\n".join(to_print_target[:10]))
 
-    match_acc = sum(match_results) * 1. / len(match_results)
-    # [print("%s\n\t==>%s\n\t==>%s" % (" ".join(e.src_toks), " ".join(e.tgt_toks), c)) for e,c in zip(test_set, top_codes)]
-    
-    #with open("output.txt", "w") as f:
-     #   for c in top_codes:
-      #      f.write(c.replace(" ","") + "\n")
 
-    print("String Acc", match_acc)
+
+    with open("output.txt", "w") as f:
+       for c in to_print:
+           f.write(c + "\n")
+
 
 if __name__ == '__main__':
     args = parse_args('test')

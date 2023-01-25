@@ -8,6 +8,15 @@ from grammar.hypothesis import Hypothesis
 import numpy as np
 import os
 from common.config import update_args
+from transformers import AutoModel, AutoConfig
+
+def mean_pooling(model_output, attention_mask):
+    token_embeddings = model_output[0] #First element of model_output contains all token embeddings
+    input_mask_expanded = attention_mask.unsqueeze(-1).expand(token_embeddings.size()).float()
+    sum_embeddings = torch.sum(token_embeddings * input_mask_expanded, 1)
+    sum_mask = torch.clamp(input_mask_expanded.sum(1), min=1e-9)
+    return sum_embeddings / sum_mask
+
 
 class CompositeTypeModule(nn.Module):
     def __init__(self, args, type, productions):
@@ -46,8 +55,8 @@ class ConstructorTypeModule(nn.Module):
         inputs = self.dropout(inputs)
         contexts = contexts.expand([self.n_field, -1])
         inputs = self.w(torch.cat([inputs, contexts], dim=1)).unsqueeze(0)
-        v_state = (v_state[0].expand(self.n_field, -1).unsqueeze(0), v_state[1].expand(self.n_field, -1).unsqueeze(0))
-        # print(inputs.shape, v_state[0].shape, v_state[1].shape)
+        v_state = (v_state[0].expand(self.n_field, -1).unsqueeze(0).contiguous(), v_state[1].expand(self.n_field, -1).unsqueeze(0).contiguous())
+
         _, outputs = v_lstm(inputs, v_state)
 
         hidden_states = outputs[0].unbind(1)
@@ -60,7 +69,7 @@ class PrimitiveTypeModule(nn.Module):
         super().__init__()
         self.type = type
         self.vocab = vocab
-        # print(vocab)
+        # print(vocab.word_to_id)
         self.w = nn.Linear(2 * args.enc_hid_size + args.field_emb_size, len(vocab))
 
     def forward(self, x):
@@ -79,6 +88,7 @@ class ASNParser(nn.Module):
 
         # encoder
         self.args = args
+
         self.src_embedding = EmbeddingLayer(args.src_emb_size, vocab.src_vocab.size(), args.dropout)
         self.encoder = RNNEncoder(args.src_emb_size, args.enc_hid_size, args.dropout, True)
         self.transition_system = transition_system
@@ -113,36 +123,40 @@ class ASNParser(nn.Module):
         self.dropout = nn.Dropout(args.dropout)
 
     def score(self, examples):
-        # for ex in examples:
+        batch = Batch(examples, self.grammar, self.vocab, cuda=self.args.cuda)
+        sent_embedding = self.src_embedding(batch.sents)
 
-        scores = [self._score(ex) for ex in examples]
+        # scores = [self._score(ex) for ex in examples]
+        scores = [self._score(sent_embedding[ex, :, :].unsqueeze(0), batch.sent_lens[ex].unsqueeze(0), examples[ex].tgt_actions) for ex in range(sent_embedding.shape[0])]
         # print(scores)
         return torch.stack(scores)
     
 
-    def _score(self, ex):
+    def _score(self, ex, sent_lens, tgt_actions):
         # for i in self.vocab.primitive_vocabs.values():
         #     print(i.word_to_id)
-        batch = Batch([ex], self.grammar, self.vocab)
+        # batch = Batch([ex], self.grammar, self.vocab, cuda=self.args.cuda)
 
-        context_vecs, encoder_outputs = self.encode(batch)
+        context_vecs, encoder_outputs = self.encode(ex, sent_lens)
         init_state = encoder_outputs
         # print(batch.sent_masks)
-        return self._score_node(self.grammar.root_type, init_state, ex.tgt_actions, context_vecs, batch.sent_masks)
+        return self._score_node(self.grammar.root_type, init_state, tgt_actions, context_vecs)
 
-    def encode(self, batch):
-        sent_lens = batch.sent_lens
+    def encode(self, sent_embedding, sent_lens):
+        # sent_lens = batch.sent_lens
         # sent
         # print(batch.sents)
-        sent_embedding = self.src_embedding(batch.sents)
+        # sent_embedding = self.src_embedding(batch.sents)
+
         # print(sent_embedding.shape)
+        # print(sent_lens)
         context_vecs, final_state = self.encoder(sent_embedding, sent_lens)
 
         # L * b * hidden,  
         # print(context_vecs.size(), final_state[0].size(), final_state[1].size())
         return context_vecs, final_state
 
-    def _score_node(self, node_type, v_state, action_node, context_vecs, context_masks):
+    def _score_node(self, node_type, v_state, action_node, context_vecs):
         v_output = self.dropout(v_state[0])
         contexts = self.attn(v_output.unsqueeze(0), context_vecs).squeeze(0)
 
@@ -174,20 +188,20 @@ class ASNParser(nn.Module):
         cnstr_results = cnstr_module.update(self.v_lstm, v_state, contexts)
         for next_field, next_state, next_action in zip(cnstr.fields, cnstr_results, action_node.fields):
             # print(next_field, next_state, next_action)
-            score += self._score_node(next_field.type, next_state, next_action, context_vecs, context_masks)
+            score += self._score_node(next_field.type, next_state, next_action, context_vecs)
         return score
 
-    def naive_parse(self, ex):
-        batch = Batch([ex], self.grammar, self.vocab, train=False)        
-        context_vecs, encoder_outputs = self.encode(batch)
+    def naive_parse(self, sent_embedding, sent_lens):
+        # batch = Batch([ex], self.grammar, self.vocab, train=False)
+        context_vecs, encoder_outputs = self.encode(sent_embedding, sent_lens)
         init_state = encoder_outputs
         # print("**************************************")
-        action_tree = self._naive_parse(self.grammar.root_type, init_state, context_vecs, batch.sent_masks, 1)
+        action_tree = self._naive_parse(self.grammar.root_type, init_state, context_vecs, 1)
 
         # print(self.transition_system.build_ast_from_actions(action_tree))
         return self.transition_system.build_ast_from_actions(action_tree)
 
-    def _naive_parse(self, node_type, v_state, context_vecs, context_masks, depth):
+    def _naive_parse(self, node_type, v_state, context_vecs, depth):
 
         # v_state = v_state.torch.unsqueeze(0)
 
@@ -235,7 +249,7 @@ class ASNParser(nn.Module):
         # next_states = self.v_lstm( [1 * 1 * x], v_state)
         cnstr_results = cnstr_module.update(self.v_lstm, v_state, contexts)
         #print("BEGIN recursive")
-        action_fields = [self._naive_parse(next_field.type, next_state, context_vecs, context_masks, depth+1) for next_field, next_state in zip(cnstr.fields, cnstr_results)]
+        action_fields = [self._naive_parse(next_field.type, next_state, context_vecs, depth+1) for next_field, next_state in zip(cnstr.fields, cnstr_results)]
         # print(action)
         #print("action_fields = ", action_fields)
         #print("END recursive")
@@ -323,6 +337,7 @@ class ASNParser(nn.Module):
         return continuous
 
     def save(self, filename):
+        # TODO return old version of this method to save dict of params
         dir_name = os.path.dirname(filename)
         if not os.path.exists(dir_name):
             os.makedirs(dir_name)
@@ -333,7 +348,7 @@ class ASNParser(nn.Module):
             'vocab': self.vocab,
             'state_dict': self.state_dict()
         }
-        torch.save(params, filename)
+        torch.save(self, filename)
 
     @classmethod
     def load(cls, model_path, ex_args=None, cuda=False):
@@ -347,9 +362,11 @@ class ASNParser(nn.Module):
         if ex_args:
             update_args(saved_args, ex_args)
         parser = cls(saved_args, transition_system, vocab)
+        # print([i for i in saved_state][:56])
         parser.load_state_dict(saved_state)
-        
-        # setattr(saved_args, )
+        # parser = torch.load(model_path)
+        print("load")
+
         if cuda: parser = parser.cuda()
         parser.eval()
 
@@ -361,14 +378,33 @@ class ASNParser(nn.Module):
 class EmbeddingLayer(nn.Module):
     def __init__(self, embedding_dim, full_dict_size, embedding_dropout_rate):
         super(EmbeddingLayer, self).__init__()
-        self.embedding = nn.Embedding(full_dict_size, embedding_dim)
+        # Compute token embeddings
+        self.model = AutoModel.from_pretrained("cointegrated/rubert-tiny")
+        # config = AutoConfig.from_pretrained("cointegrated/rubert-tiny")  # Download configuration from S3 and cache.
+        # self.model = AutoModel.from_config(config)
+
+        for param in self.model.parameters():
+            param.requires_grad = True
+
+        # TODO add condition train/test
+        # for i in range(24):
+        #     for param in self.model.encoder.layer[i].output.parameters():
+        #         param.requires_grad = True
+        # self.embedding = nn.Embedding(full_dict_size, embedding_dim)
+        # self.linear = nn.Linear(1024, embedding_dim)
         self.dropout = nn.Dropout(embedding_dropout_rate)
 
-        nn.init.uniform_(self.embedding.weight, -1, 1)
+        # nn.init.uniform_(self.embedding.weight, -1, 1)
 
     def forward(self, input):
-        embedded_words = self.embedding(input)
-        final_embeddings = self.dropout(embedded_words)
+
+        model_output = self.model(**input)
+        # print(model_output[0])
+        embeddings = model_output.last_hidden_state
+        # embeddings = torch.nn.functional.normalize(embeddings)
+        # embedded_words = mean_pooling(model_output, input['attention_mask'])
+        # print(embedded_words.shape)
+        final_embeddings = self.dropout(embeddings)
         return final_embeddings
 
 class RNNEncoder(nn.Module):
@@ -408,10 +444,13 @@ class RNNEncoder(nn.Module):
     # the final states h and c from the encoder for each sentence.
     def forward(self, embedded_words, input_lens):
         # Takes the embedded sentences, "packs" them into an efficient Pytorch-internal representation
+        # print(embedded_words, input_lens.cpu())
+
         packed_embedding = nn.utils.rnn.pack_padded_sequence(
-            embedded_words, input_lens, batch_first=True)
+            embedded_words, input_lens.cpu(), batch_first=True)
         # Runs the RNN over each sequence. Returns output at each position as well as the last vectors of the RNN
         # state for each sentence (first/last vectors for bidirectional)
+        # print(packed_embedding)
         output, hn = self.rnn(packed_embedding)
         # Unpacks the Pytorch representation into normal tensors
         output, _ = nn.utils.rnn.pad_packed_sequence(output)
