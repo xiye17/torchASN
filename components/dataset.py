@@ -101,12 +101,21 @@ class Batch(object):
             [self.compute_choice_index(e.tgt_actions) for e in self.examples]
 
     def compute_choice_index(self, node):
-        if node.action.action_type == "ApplyRule":
+        if isinstance(node, list):
+            for sub_node in node:
+                self.compute_choice_index(sub_node)
+
+        elif node.action.action_type == "ApplyRule":
             candidate = self.grammar.get_prods_by_type(node.action.type)
+            # print(candidate)
             node.action.choice_index = candidate.index(node.action.choice)
+
             [self.compute_choice_index(x) for x in node.fields]
         elif node.action.action_type == "GenToken":
             token_vocab = self.vocab.primitive_vocabs[node.action.type]
             node.action.choice_index = token_vocab[node.action.choice]
+        elif node.action.action_type == "Reduce":
+            node.action.choice_index = -2
+
         else:
             raise ValueError("invalid action type", node.action.action_type)

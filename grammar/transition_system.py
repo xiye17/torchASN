@@ -1,26 +1,29 @@
 # coding=utf-8
 from .dsl_ast import *
 
+
 class Action(object):
-    def __init__(self, type, choice, action_type):
-        self.type = type
+    def __init__(self, type_, choice, action_type):
+        self.type = type_
         self.choice = choice
         self.action_type = action_type
 
         # cache choice index among tokens or feasible types
         self.choice_index = -1
 
+
 class PlaceHolderAction(Action):
-    def __init__(self, type):
-        super().__init__(type, None, 'PlaceHolder')
+    def __init__(self, type_):
+        super().__init__(type_, None, 'PlaceHolder')
     
     def __repr__(self):
-        return 'PlaceHoder'
+        return 'PlaceHolder'
+
 
 class ApplyRuleAction(Action):
-    def __init__(self, type, production):
+    def __init__(self, type_, production):
         # self.production = production
-        super().__init__(type, production, 'ApplyRule')
+        super().__init__(type_, production, 'ApplyRule')
         self.production = production
 
     def __hash__(self):
@@ -37,8 +40,8 @@ class ApplyRuleAction(Action):
 
 
 class GenTokenAction(Action):
-    def __init__(self, type, token):
-        super().__init__(type, token, 'GenToken')
+    def __init__(self, type_, token):
+        super().__init__(type_, token, 'GenToken')
         self.token = token
 
     def __repr__(self):
@@ -46,8 +49,12 @@ class GenTokenAction(Action):
 
 
 class ReduceAction(Action):
-   def __repr__(self):
-       return 'Reduce'
+    def __init__(self):
+        super().__init__(None, None, 'Reduce')
+
+    def __repr__(self):
+        return 'Reduce'
+
 
 class ActionTree:
     def __init__(self, action, fields=[]):
@@ -60,82 +67,66 @@ class ActionTree:
     def __repr__(self):
         return '%s( %s )' % (self.action.__repr__(), ",".join([x.__repr__() for x in self.fields]))
 
+
 class TransitionSystem(object):
     def __init__(self, grammar):
         self.grammar = grammar
 
-    # def get_actions(self, asdl_ast):
-    #     """
-    #     generate action sequence given the ASDL Syntax Tree
-    #     """
-
-    #     actions = []
-
-    #     parent_action = ApplyRuleAction(asdl_ast.production)
-    #     actions.append(parent_action)
-
-    #     for field in asdl_ast.fields:
-    #         # is a composite field
-    #         if self.grammar.is_composite_type(field.type):
-    #             if field.cardinality == 'single':
-    #                 field_actions = self.get_actions(field.value)
-    #             else:
-    #                 field_actions = []
-
-    #                 if field.value is not None:
-    #                     if field.cardinality == 'multiple':
-    #                         for val in field.value:
-    #                             cur_child_actions = self.get_actions(val)
-    #                             field_actions.extend(cur_child_actions)
-    #                     elif field.cardinality == 'optional':
-    #                         field_actions = self.get_actions(field.value)
-
-    #                 # if an optional field is filled, then do not need Reduce action
-    #                 if field.cardinality == 'multiple' or field.cardinality == 'optional' and not field_actions:
-    #                     field_actions.append(ReduceAction())
-    #         else:  # is a primitive field
-    #             field_actions = self.get_primitive_field_actions(field)
-
-    #             # if an optional field is filled, then do not need Reduce action
-    #             if field.cardinality == 'multiple' or field.cardinality == 'optional' and not field_actions:
-    #                 # reduce action
-    #                 field_actions.append(ReduceAction())
-
-    #         actions.extend(field_actions)
-
-    #     return actions
-
-
     def get_action_tree(self, ast_tree):
-        # if isinstance(ast_node, str)
         return self._get_action_tree(self.grammar.root_type, ast_tree)
 
     def _get_action_tree(self, dsl_type, ast_node):
-        if dsl_type.is_primitive_type():
-            assert isinstance(ast_node, str)
-            # print(ast_node, type(ast_node))
-            return ActionTree(GenTokenAction(dsl_type, ast_node))
+
+        if ast_node is None:  # None -> Reduce Actions.
+            return ActionTree(ReduceAction())
 
         # primitive type
-        # ast_node.value
-        action = ApplyRuleAction(dsl_type, ast_node.production)
-        fields = [self._get_action_tree(x.field.type, x.value) for x in ast_node.fields]
+        if dsl_type.is_primitive_type():
+            assert isinstance(ast_node, str)
+            return ActionTree(GenTokenAction(dsl_type, ast_node))
+
         # composite type
-        return ActionTree(action, fields)
+        if isinstance(ast_node, list):  # multiple case
+            multiple_field = []
+
+            for node in ast_node:
+                if node is None:
+                    continue  # Reduce
+                action = ApplyRuleAction(dsl_type, node.production)
+                node_fields = [self._get_action_tree(x.field.type, x.value) for x in node.fields]
+
+                multiple_field.append(ActionTree(action, node_fields))
+            else:
+                multiple_field.append(ActionTree(ReduceAction()))
+
+            return multiple_field
+
+        else:  # single / optional case
+            action = ApplyRuleAction(dsl_type, ast_node.production)
+            fields = [self._get_action_tree(x.field.type, x.value) for x in ast_node.fields]
+
+            return ActionTree(action, fields)
     
     def build_ast_from_actions(self, action_tree):
-        if action_tree.action is None: # TODO for now only
+        if isinstance(action_tree, list):  # cardinality multiple
+            multiple_field = [self.build_ast_from_actions(node) for node in action_tree]
+            return multiple_field
+
+        if isinstance(action_tree.action, GenTokenAction):
+            # choice contains production(DSLProduction) or token (str)
+            return action_tree.action.choice
+
+        if isinstance(action_tree.action, ReduceAction):  # Reduce Action -> None
             return None
 
-        if not action_tree.fields:
-            return action_tree.action.choice
-        
+        if not action_tree.fields:  # Case for constructor without parameters (agg_op = VOID | SUM)
+            return AbstractSyntaxTree(action_tree.action.choice)
+
         production = action_tree.action.choice
         assert len(action_tree.fields) == len(production.constructor.fields)
-        
         return AbstractSyntaxTree(production, realized_fields=[
                 RealizedField(cnstr_f, self.build_ast_from_actions(action_f))
-                for action_f, cnstr_f in zip (action_tree.fields, production.constructor.fields)
+                for action_f, cnstr_f in zip(action_tree.fields, production.constructor.fields)
             ])
 
     def tokenize_code(self, code, mode):
@@ -149,37 +140,3 @@ class TransitionSystem(object):
 
     def surface_code_to_ast(self, code):
         raise NotImplementedError
-
-    def get_primitive_field_actions(self, realized_field):
-        raise NotImplementedError
-
-    # def get_valid_continuation_types(self, hyp):
-    #     if hyp.tree:
-    #         if self.grammar.is_composite_type(hyp.frontier_field.type):
-    #             if hyp.frontier_field.cardinality == 'single':
-    #                 return ApplyRuleAction,
-    #             else:  # optional, multiple
-    #                 return ApplyRuleAction, ReduceAction
-    #         else:
-    #             if hyp.frontier_field.cardinality == 'single':
-    #                 return GenTokenAction,
-    #             elif hyp.frontier_field.cardinality == 'optional':
-    #                 if hyp._value_buffer:
-    #                     return GenTokenAction,
-    #                 else:
-    #                     return GenTokenAction, ReduceAction
-    #             else:
-    #                 return GenTokenAction, ReduceAction
-    #     else:
-    #         return ApplyRuleAction,
-
-    # def get_valid_continuating_productions(self, hyp):
-    #     if hyp.tree:
-    #         if self.grammar.is_composite_type(hyp.frontier_field.type):
-    #             return self.grammar[hyp.frontier_field.type]
-    #         else:
-    #             raise ValueError
-    #     else:
-    #         return self.grammar[self.grammar.root_type]
-
- 

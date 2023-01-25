@@ -1,4 +1,4 @@
-from collections import OrderedDict, Counter
+from collections import OrderedDict
 from itertools import chain
 import re
 
@@ -50,7 +50,6 @@ class Grammar(object):
 
     def get_prods_by_type(self, type):
         return self._productions[type]
-
     @property
     def types(self):
         if not hasattr(self, '_types'):
@@ -160,7 +159,6 @@ class Grammar(object):
         grammar = Grammar(all_productions)
 
         return grammar
-
 
 class DSLProduction(object):
     def __init__(self, type, constructor):

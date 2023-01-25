@@ -12,7 +12,6 @@ def build_dataset_vocab(examples, transition_system, src_size=5000, code_size=50
     code_tokens = [e.tgt_toks for e in examples]
     code_vocab = VocabEntry.from_corpus(code_tokens, size=code_size, freq_cutoff=0)
 
-    
     type_primitive_tokens = []
     for tree in map(lambda x: x.tgt_actions, examples):
         type_primitive_tokens.extend(extract_primitive_tokens(tree, transition_system))
@@ -29,7 +28,9 @@ def build_dataset_vocab(examples, transition_system, src_size=5000, code_size=50
 def extract_primitive_tokens(root, transition_system):
     results = []
     def _exract_primitive_tokens_helper(node):
-        if transition_system.grammar.is_primitive_type(node.action.type):
+        if isinstance(node, list):
+            [_exract_primitive_tokens_helper(x) for x in node]
+        elif transition_system.grammar.is_primitive_type(node.action.type):
             results.append((node.action.type, node.action.choice))
         else:
             [_exract_primitive_tokens_helper(x) for x in node.fields]

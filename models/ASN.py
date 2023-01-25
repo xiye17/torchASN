@@ -1,22 +1,19 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-import random
 from components.dataset import Batch
-from grammar.transition_system import ApplyRuleAction, GenTokenAction, ActionTree
+from grammar.transition_system import ApplyRuleAction, GenTokenAction, ActionTree, ReduceAction
 from grammar.hypothesis import Hypothesis
 import numpy as np
 import os
 from common.config import update_args
 
-class CompositeTypeModule(nn.Module):
-    def __init__(self, args, type, productions):
+
+class ReduceModule(nn.Module):
+    def __init__(self, args):
         super().__init__()
-        self.type = type
-        self.productions = productions
-        # print(productions)
-        self.w = nn.Linear(2 * args.enc_hid_size + args.field_emb_size, len(productions))
-        # self.dropout = nn.Dropout(args.dropout)
+        self.type = "Reduce"
+        self.w = nn.Linear(2 * args.enc_hid_size + args.field_emb_size, 2)
 
     def forward(self, x):
         return self.w(x)
@@ -24,7 +21,25 @@ class CompositeTypeModule(nn.Module):
     # x b * h
     def score(self, x, contexts):
         x = torch.cat([x, contexts], dim=1)
-        return F.log_softmax(self.w(x),1)
+
+        return F.log_softmax(self.w(x), 1)
+
+
+class CompositeTypeModule(nn.Module):
+    def __init__(self, args, type_, productions):
+        super().__init__()
+        self.type = type_
+        self.productions = productions
+        self.w = nn.Linear(2 * args.enc_hid_size + args.field_emb_size, len(productions))
+
+    def forward(self, x):
+        return self.w(x)
+
+    # x b * h
+    def score(self, x, contexts):
+        x = torch.cat([x, contexts], dim=1)
+
+        return F.log_softmax(self.w(x), 1)
 
 
 class ConstructorTypeModule(nn.Module):
@@ -32,7 +47,6 @@ class ConstructorTypeModule(nn.Module):
         super().__init__()
         self.production = production
         self.n_field = len(production.constructor.fields)
-        # print(production.constructor.fields)
         self.field_embeddings = nn.Embedding(len(production.constructor.fields), args.field_emb_size)
         self.w = nn.Linear(2 * args.enc_hid_size + args.field_emb_size, args.enc_hid_size)
         self.dropout = nn.Dropout(args.dropout)
@@ -47,30 +61,29 @@ class ConstructorTypeModule(nn.Module):
         contexts = contexts.expand([self.n_field, -1])
         inputs = self.w(torch.cat([inputs, contexts], dim=1)).unsqueeze(0)
         v_state = (v_state[0].expand(self.n_field, -1).unsqueeze(0), v_state[1].expand(self.n_field, -1).unsqueeze(0))
-        # print(inputs.shape, v_state[0].shape, v_state[1].shape)
         _, outputs = v_lstm(inputs, v_state)
 
         hidden_states = outputs[0].unbind(1)
         cell_states = outputs[1].unbind(1)
-        # print(outputs[0].shape, outputs[1].shape)
+
         return list(zip(hidden_states, cell_states))
 
+
 class PrimitiveTypeModule(nn.Module):
-    def __init__(self, args, type, vocab):
+    def __init__(self, args, type_, vocab):
         super().__init__()
-        self.type = type
+        self.type = type_
         self.vocab = vocab
-        # print(vocab)
         self.w = nn.Linear(2 * args.enc_hid_size + args.field_emb_size, len(vocab))
 
     def forward(self, x):
         return self.w(x)
-    # need a score
 
     # x b * h
     def score(self, x, contexts):
         x = torch.cat([x, contexts], dim=1)
-        return F.log_softmax(self.w(x),1)
+
+        return F.log_softmax(self.w(x), 1)
 
 
 class ASNParser(nn.Module):
@@ -85,164 +98,175 @@ class ASNParser(nn.Module):
         self.vocab = vocab
         grammar = transition_system.grammar
         self.grammar = grammar
-        # init
-        comp_type_modules = []
 
+        comp_type_modules = {}
         for dsl_type in grammar.composite_types:
-            # print((dsl_type.name, grammar.get_prods_by_type(dsl_type)))
-            comp_type_modules.append((dsl_type.name,
-                                      CompositeTypeModule(args, dsl_type, grammar.get_prods_by_type(dsl_type))))
-        # print([i for i in comp_type_modules])
+            comp_type_modules.update({dsl_type.name:
+                                      CompositeTypeModule(args, dsl_type, grammar.get_prods_by_type(dsl_type))})
         self.comp_type_dict = nn.ModuleDict(comp_type_modules)
 
-        # init
-        cnstr_type_modules = []
+        cnstr_type_modules = {}
         for prod in grammar.productions:
-            cnstr_type_modules.append((prod.constructor.name,
-                                       ConstructorTypeModule(args, prod)))
+            cnstr_type_modules.update({prod.constructor.name:
+                                       ConstructorTypeModule(args, prod)})
         self.const_type_dict = nn.ModuleDict(cnstr_type_modules)
-        # print(cnstr_type_modules)
-        prim_type_modules = []
+
+        prim_type_modules = {}
         for prim_type in grammar.primitive_types:
-            prim_type_modules.append((prim_type.name,
-                                      PrimitiveTypeModule(args, prim_type, vocab.primitive_vocabs[prim_type])))
+            prim_type_modules.update({prim_type.name:
+                                      PrimitiveTypeModule(args, prim_type, vocab.primitive_vocabs[prim_type])})
+
         self.prim_type_dict = nn.ModuleDict(prim_type_modules)
-        # print(prim_type_modules)
+
+        self.reduce_module = ReduceModule(args)
+
         self.v_lstm = nn.LSTM(args.enc_hid_size, args.enc_hid_size)
         self.attn = LuongAttention(args.enc_hid_size, 2 * args.enc_hid_size)
         self.dropout = nn.Dropout(args.dropout)
 
     def score(self, examples):
-        # for ex in examples:
-
         scores = [self._score(ex) for ex in examples]
-        # print(scores)
+
         return torch.stack(scores)
-    
 
     def _score(self, ex):
-        # for i in self.vocab.primitive_vocabs.values():
-        #     print(i.word_to_id)
         batch = Batch([ex], self.grammar, self.vocab)
 
         context_vecs, encoder_outputs = self.encode(batch)
         init_state = encoder_outputs
-        # print(batch.sent_masks)
-        return self._score_node(self.grammar.root_type, init_state, ex.tgt_actions, context_vecs, batch.sent_masks)
+        return self._score_node(self.grammar.root_type, init_state, ex.tgt_actions, context_vecs, batch.sent_masks, "single")
 
     def encode(self, batch):
         sent_lens = batch.sent_lens
-        # sent
-        # print(batch.sents)
+
         sent_embedding = self.src_embedding(batch.sents)
-        # print(sent_embedding.shape)
+
         context_vecs, final_state = self.encoder(sent_embedding, sent_lens)
 
-        # L * b * hidden,  
-        # print(context_vecs.size(), final_state[0].size(), final_state[1].size())
         return context_vecs, final_state
 
-    def _score_node(self, node_type, v_state, action_node, context_vecs, context_masks):
+    def _score_node(self, node_type, v_state, action_node, context_vecs, context_masks, cardinality):
         v_output = self.dropout(v_state[0])
-        contexts = self.attn(v_output.unsqueeze(0), context_vecs).squeeze(0)
 
-        # print(contexts.shape)
-        if node_type.is_primitive_type():
-            module = self.prim_type_dict[node_type.name]
-            # scores = mask * module()
-            scores = module.score(v_output, contexts)
-            # scores =  [tgt_action_tree.action.choice_idx]
-            # b * choice
-            score = -1 * scores.view([-1])[action_node.action.choice_index]
-            # print("Primitive", score)
+        contexts = self.attn(v_output.unsqueeze(0), context_vecs).squeeze(0)
+        score = 0
+
+        if cardinality == "optional":
+            scores = self.reduce_module.score(v_state[0], contexts)
+            scores = -1 * scores.view([-1])
+
+            if action_node.action.choice_index == -2:
+                return scores[1]
+
+            score += scores[0]
+
+        if cardinality == "multiple":
+
+            self.recursion_v_state = v_state
+
+            for field in action_node:
+                score += self._score_node(node_type, self.recursion_v_state, field, context_vecs, context_masks, "optional")
+
             return score
 
+        if node_type.is_primitive_type():
+            module = self.prim_type_dict[node_type.name]
+            scores = module.score(v_output, contexts)
+            score += -1 * scores.view([-1])[action_node.action.choice_index]
 
-        cnstr = action_node.action.choice.constructor
-        # print(cnstr.name)
-        # print(node_type.name)
-        comp_module = self.comp_type_dict[node_type.name]
-        scores = comp_module.score(v_output, contexts)
-        score = -1 * scores.view([-1])[action_node.action.choice_index]
-        # print("Apply", score)
+            return score
 
-        # pass through
-        # print(node_type.name)
-        cnstr_module = self.const_type_dict[cnstr.name]
-        # cnstr_results = const_module.iup()
-        # next_states = self.v_lstm( [1 * 1 * x], v_state)
-        cnstr_results = cnstr_module.update(self.v_lstm, v_state, contexts)
-        for next_field, next_state, next_action in zip(cnstr.fields, cnstr_results, action_node.fields):
-            # print(next_field, next_state, next_action)
-            score += self._score_node(next_field.type, next_state, next_action, context_vecs, context_masks)
-        return score
+        else:
+            cnstr = action_node.action.choice.constructor
+
+            comp_module = self.comp_type_dict[node_type.name]
+            scores = comp_module.score(v_output, contexts)
+            score += -1 * scores.view([-1])[action_node.action.choice_index]
+
+            cnstr_module = self.const_type_dict[cnstr.name]
+
+            cnstr_results = cnstr_module.update(self.v_lstm, v_state, contexts)
+
+            for next_field, next_state, next_action in zip(cnstr.fields, cnstr_results, action_node.fields):
+                self.recursion_v_state = next_state
+                score += self._score_node(next_field.type, next_state, next_action, context_vecs, context_masks, next_field.cardinality)
+
+            return score
 
     def naive_parse(self, ex):
         batch = Batch([ex], self.grammar, self.vocab, train=False)        
         context_vecs, encoder_outputs = self.encode(batch)
         init_state = encoder_outputs
-        # print("**************************************")
-        action_tree = self._naive_parse(self.grammar.root_type, init_state, context_vecs, batch.sent_masks, 1)
 
-        # print(self.transition_system.build_ast_from_actions(action_tree))
+        action_tree = self._naive_parse(self.grammar.root_type, init_state, context_vecs, batch.sent_masks, 1, 'single')
+
         return self.transition_system.build_ast_from_actions(action_tree)
 
-    def _naive_parse(self, node_type, v_state, context_vecs, context_masks, depth):
-
-        # v_state = v_state.torch.unsqueeze(0)
-
-        # tgt_production if production needed
-        # tgt_production = tgt
-
-        # else token needed
-        # tgt_token = tgt
-        #print('-------------------------------')
-        #print("nodetype = ", node_type.name)
+    def _naive_parse(self, node_type, v_state, context_vecs, context_masks, depth, cardinality="single"):
 
         contexts = self.attn(v_state[0].unsqueeze(0), context_vecs).squeeze(0)
-        if depth > 9:
-            return ActionTree(None)
 
-        if node_type.is_primitive_type():
-            module = self.prim_type_dict[node_type.name]
-            #print('primitive module = ', module)
-            # scores = mask * module()
-            scores = module.score(v_state[0], contexts).cpu().numpy().flatten()
-            # scores =  [tgt_action_tree.action.choice_idx]
-            # b * choice
-            # score = -1 * scores.view([-1])[action_node.action.choice_index]
-            choice_idx = np.argmax(scores)
-            #print("word = ", module.vocab.get_word(choice_idx))
-            return ActionTree(GenTokenAction(node_type, module.vocab.get_word(choice_idx)))
+        if cardinality == "optional":
 
-        
-        comp_module = self.comp_type_dict[node_type.name]
-        #print("comp type = ", comp_module)
-        scores = comp_module.score(v_state[0], contexts).cpu().numpy().flatten()
-        choice_idx = np.argmax(scores)
-        #print("comp_module.productions = ", comp_module.productions)
-        production = comp_module.productions[choice_idx]
+            scores = self.reduce_module.score(v_state[0], contexts).cpu().numpy().flatten()
+            is_reduce = np.argmax(scores)
 
-        #print("production = ", production)
-        action = ApplyRuleAction(node_type, production)
-        #print("action = ", action)
-        cnstr = production.constructor
-        #print("constructor.name = ", cnstr.name)
-        # pass through
-        cnstr_module = self.const_type_dict[cnstr.name]
-        # print("cnstr module = ", cnstr_module)
-        # cnstr_results = const_module.iup()
-        # next_states = self.v_lstm( [1 * 1 * x], v_state)
-        cnstr_results = cnstr_module.update(self.v_lstm, v_state, contexts)
-        #print("BEGIN recursive")
-        action_fields = [self._naive_parse(next_field.type, next_state, context_vecs, context_masks, depth+1) for next_field, next_state in zip(cnstr.fields, cnstr_results)]
-        # print(action)
-        #print("action_fields = ", action_fields)
-        #print("END recursive")
-        #print("-------------------------------")
-        return ActionTree(action, action_fields)
+            if is_reduce or (depth > self.args.max_depth):
+                return ActionTree(ReduceAction())
 
-    def parse(self, ex):
+        if cardinality == "multiple":
+            action_fields = []
+            self.recursion_v_state = v_state
+
+            for _ in range(self.args.max_depth):
+                depth += 1
+
+                action_tree = self._naive_parse(node_type, self.recursion_v_state, context_vecs, context_masks, depth, "optional")
+                action_fields.append(action_tree)
+
+                if isinstance(action_tree.action, ReduceAction):
+                    break
+
+            return action_fields
+
+        else:
+
+            # Primitive
+            if node_type.is_primitive_type():
+                module = self.prim_type_dict[node_type.name]
+                scores = module.score(v_state[0], contexts).cpu().numpy().flatten()
+
+                choice_idx = np.argmax(scores)
+
+                a = module.vocab.get_word(choice_idx)
+
+                return ActionTree(GenTokenAction(node_type, a))
+
+            else:  # Composite
+
+                comp_module = self.comp_type_dict[node_type.name]
+                scores = comp_module.score(v_state[0], contexts).cpu().numpy().flatten()
+                choice_idx = np.argmax(scores)
+                production = comp_module.productions[choice_idx]
+
+                action = ApplyRuleAction(node_type, production)
+
+                cnstr = production.constructor
+
+                cnstr_module = self.const_type_dict[cnstr.name]
+
+                cnstr_results = cnstr_module.update(self.v_lstm, v_state, contexts)
+
+                action_fields = []
+                for next_field, next_state in zip(cnstr.fields, cnstr_results):
+                    self.recursion_v_state = next_state
+                    action_fields.append(self._naive_parse(next_field.type, next_state,
+                                                           context_vecs, context_masks, depth + 1,
+                                                           next_field.cardinality))
+
+                return ActionTree(action, action_fields)
+
+    def parse(self, ex):  # Is not using
         batch = Batch([ex], self.grammar, self.vocab, train=False)        
         context_vecs, encoder_outputs = self.encode(batch)
         init_state = encoder_outputs
@@ -264,7 +288,7 @@ class ASNParser(nn.Module):
             num_slots = self.args.beam_size - len(completed_hyps)
 
             cur_beam = []
-            for hyp_i, hyp  in enumerate(hyp_pools[:num_slots]):
+            for hyp_i, hyp in enumerate(hyp_pools[:num_slots]):
                 if hyp.is_complete():
                     completed_hyps.append(hyp)
                 else:
@@ -277,14 +301,6 @@ class ASNParser(nn.Module):
         return completed_hyps
 
     def continuations_of_hyp(self, hyp, context_vecs, context_masks):
-
-        # v_state = v_state.torch.unsqueeze(0)
-
-        # tgt_production if production needed
-        # tgt_production = tgt
-
-        # else token needed
-        # tgt_token = tgt
         
         pending_node, v_state = hyp.get_pending_node()
         
@@ -294,16 +310,12 @@ class ASNParser(nn.Module):
 
         if node_type.is_primitive_type():
             module = self.prim_type_dict[node_type.name]
-            # scores = mask * module()
+
             scores = module.score(v_state[0], contexts).cpu().numpy().flatten()
-            # scores =  [tgt_action_tree.action.choice_idx]
-            # b * choice
-            # score = -1 * scores.view([-1])[action_node.action.choice_index]
-            # choice_idx = np.argmax(scores)
+
             continuous = []
             for choice_idx, score in enumerate(scores):
                 continuous.append(hyp.copy_and_apply_action(GenTokenAction(node_type, module.vocab.get_word(choice_idx)), score))
-                # return ActionTree()
             return continuous
 
         comp_module = self.comp_type_dict[node_type.name]
@@ -314,12 +326,10 @@ class ASNParser(nn.Module):
             production = comp_module.productions[choice_idx]
             action = ApplyRuleAction(node_type, production)
             cnstr = production.constructor
-            # pass through
             cnstr_module = self.const_type_dict[cnstr.name]
-            # cnstr_results = const_module.iup()
-            # next_states = self.v_lstm( [1 * 1 * x], v_state)
             cnstr_results = cnstr_module.update(self.v_lstm, v_state, contexts)
-            continuous.append(hyp.copy_and_apply_action(ApplyRuleAction(node_type, production), score, cnstr_results))
+            continuous.append(hyp.copy_and_apply_action(action, score, cnstr_results))
+
         return continuous
 
     def save(self, filename):
@@ -348,15 +358,17 @@ class ASNParser(nn.Module):
             update_args(saved_args, ex_args)
         parser = cls(saved_args, transition_system, vocab)
         parser.load_state_dict(saved_state)
-        
-        # setattr(saved_args, )
-        if cuda: parser = parser.cuda()
+
+        if cuda:
+            parser = parser.cuda()
+
         parser.eval()
 
         return parser
 
-    def forward(self, input):
-        return [self.naive_parse(ex) for ex in input]
+    def forward(self, input_):
+        return [self.naive_parse(ex) for ex in input_]
+
 
 class EmbeddingLayer(nn.Module):
     def __init__(self, embedding_dim, full_dict_size, embedding_dropout_rate):
@@ -366,14 +378,15 @@ class EmbeddingLayer(nn.Module):
 
         nn.init.uniform_(self.embedding.weight, -1, 1)
 
-    def forward(self, input):
-        embedded_words = self.embedding(input)
+    def forward(self, input_):
+        embedded_words = self.embedding(input_)
         final_embeddings = self.dropout(embedded_words)
         return final_embeddings
 
+
 class RNNEncoder(nn.Module):
     # Parameters: input size (should match embedding layer), hidden size for the LSTM, dropout rate for the RNN,
-    # and a boolean flag for whether or not we're using a bidirectional encoder
+    # and a boolean flag for whether we're using a bidirectional encoder or not
     def __init__(self, input_size, hidden_size, dropout, bidirect):
         super(RNNEncoder, self).__init__()
         self.bidirect = bidirect
@@ -436,7 +449,7 @@ class RNNEncoder(nn.Module):
 
         output = self.dropout(output)
         # print(output.shape, h_t[0].shape, h_t[1].shape)
-        return (output, h_t)
+        return output, h_t
 
 
 class LuongAttention(nn.Module):

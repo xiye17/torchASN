@@ -70,7 +70,7 @@ class Hypothesis:
                 self.pending_nodes = self.pending_nodes + new_pending_nodes
                 self.pending_states = self.pending_states + updated_states
         else:
-            raise ValueError("Invalid acction type")
+            raise ValueError("Invalid action type")
 
     def clone(self):
         hyp = Hypothesis()
