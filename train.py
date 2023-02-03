@@ -2,14 +2,15 @@ from common.config import *
 from components.dataset import *
 
 from grammar.grammar import Grammar
-
+from torch.utils.tensorboard import SummaryWriter
 from grammar.sparql.sparql_transition_system import SparqlTransitionSystem
 from models.ASN import ASNParser
 from models import nn_utils
-
+from datetime import datetime
 from torch import optim
 from tqdm import tqdm
 import time
+import os
 
 def get_lr(optimizer):
     for param_group in optimizer.param_groups:
@@ -17,6 +18,17 @@ def get_lr(optimizer):
     return
 
 def train(args):
+    path_save_to = args.save_to + "ASN_" + datetime.now().strftime("%d_%m_%Y_%H_%M_%S")
+    os.mkdir(path_save_to)
+    os.mkdir(path_save_to + '/models')
+    os.mkdir(path_save_to + '/logs')
+
+    if args.make_log:
+        train_writer = SummaryWriter(path_save_to + '/logs/train')
+        valid_writer = SummaryWriter(path_save_to + '/logs/valid')
+        for k in args.__dict__.keys():
+            train_writer.add_text(str(k), str(getattr(args, k)))
+
 
     train_set = Dataset.from_bin_file(args.train_file)
     if args.dev_file:
@@ -28,7 +40,7 @@ def train(args):
     grammar = Grammar.from_text(open(args.asdl_file).read())
 
     transition_system = SparqlTransitionSystem(grammar)
-    
+
     parser = ASNParser(args, transition_system, vocab)
 
     if args.cuda:
@@ -37,6 +49,7 @@ def train(args):
     nn_utils.glorot_init(parser.parameters())
 
     optimizer = optim.AdamW(parser.parameters(), lr=args.lr, weight_decay=args.weight_decay)
+    # optimizer = optim.Adam(parser.parameters(), lr=args.lr)
     lr_scheduler = optim.lr_scheduler.StepLR(optimizer, step_size=args.sch_step_size, gamma=args.gamma)
     best_acc = 0
     log_every = args.log_every
@@ -66,6 +79,9 @@ def train(args):
             if train_iter % log_every == 0:
                 print("[epoch {}, step {}] loss: {:.3f}".format(epoch, train_iter, loss_val / (log_every * args.batch_size)))
                 loss_val = 0.
+                if args.make_log:
+                    train_writer.add_scalar('Loss', loss, epoch)
+
 
 
         print('[epoch {}] train loss {:.3f}, epoch time {:.0f}, total time {:.0f}, lr {:.5f}'.format(epoch, epoch_loss / len(train_set), time.time() - epoch_begin, time.time() - train_begin, get_lr(optimizer)))
@@ -92,10 +108,14 @@ def train(args):
             match_acc = sum(match_results) * 1. / len(match_results)
 
             print('[epoch {}] eval acc {:.3f}, eval time {:.0f}'.format(epoch, match_acc, time.time() - eval_begin))
-            #
+            if args.make_log:
+                valid_writer.add_scalar('Accuracy', match_acc, epoch)
+
             if match_acc >= best_acc:
                 best_acc = match_acc
-                parser.save(args.save_to)
+                parser.save(path_save_to+"/models/ASN_model_file.pt")
+
+            print(f"BEST ACCURACY = {best_acc}")
 
 
 if __name__ == '__main__':

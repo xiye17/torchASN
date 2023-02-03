@@ -388,11 +388,11 @@ class EmbeddingLayer(nn.Module):
         # print(input)
         model_output = self.model(**input)
         embeddings = model_output.last_hidden_state
-        embeddings = self.linear(F.gelu(embeddings))
+        embeddings = F.gelu(embeddings)
+        embeddings = self.linear(embeddings)
         embeddings = self.bn(embeddings.permute(0, 2, 1)).permute(0, 2, 1)
         # print(embedded_words.shape)
-        final_embeddings = self.dropout(embeddings)
-        return final_embeddings
+        return self.dropout(embeddings)
 
 
 class RNNEncoder(nn.Module):
@@ -405,6 +405,7 @@ class RNNEncoder(nn.Module):
         self.hidden_size = hidden_size
         self.reduce_h_W = nn.Linear(hidden_size * 2, hidden_size, bias=True)
         self.reduce_c_W = nn.Linear(hidden_size * 2, hidden_size, bias=True)
+
         self.rnn = nn.LSTM(input_size, hidden_size, num_layers=1, batch_first=True, bidirectional=self.bidirect)
         self.init_weight()
         self.dropout = nn.Dropout(dropout)
@@ -458,6 +459,7 @@ class RNNEncoder(nn.Module):
             h, c = hn[0][0], hn[1][0]
             h_t = (h, c)
         # print(max_length, output.size(), h_t[0].size(), h_t[1].size())
+
 
         output = self.dropout(output)
         # print(output.shape, h_t[0].shape, h_t[1].shape)

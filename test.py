@@ -40,9 +40,9 @@ def test(args):
 
     print('eval acc {:.3f}, eval time {:.0f}'.format(match_acc, time.time() - eval_begin))
 
-    with open("output.txt", "w") as f:
-        for c in to_print:
-            f.write(c + "\n")
+    # with open('/'.join(args.model_file.split('/')[:-2]) + "/output.txt", "w") as f:
+    #     for c in to_print:
+    #         f.write(c + "\n")
 
 
 if __name__ == '__main__':
